@@ -10,13 +10,13 @@ export const login = data => fetch('/admin', data, 'POST');
  * 退出
  */
 
-export const signout = () => fetch('/admin/signout');
+export const signout = () => fetch('/admin/signout', 'POST');
 
 /**
  * 获取用户信息
  */
 
-export const getAdminInfo = () => fetch('/admin', 'GET');
+export const getAdminInfo = () => fetch('/admin');
 
 /**
  * api请求量
