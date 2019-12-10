@@ -4,7 +4,7 @@ import fetch from '@/config/fetch'
  * 登陆
  */
 
-export const login = data => fetch('/admin/login', data, 'POST');
+export const login = data => fetch('/admin', data, 'POST');
 
 /**
  * 退出
@@ -16,7 +16,7 @@ export const signout = () => fetch('/admin/signout');
  * 获取用户信息
  */
 
-export const getAdminInfo = () => fetch('/admin/info');
+export const getAdminInfo = () => fetch('/admin', 'GET');
 
 /**
  * api请求量

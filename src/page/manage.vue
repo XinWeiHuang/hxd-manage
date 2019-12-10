@@ -61,6 +61,6 @@
 <style lang="less" scoped>
 	@import '../style/mixin';
 	.manage_page{
-		
+
 	}
 </style>
