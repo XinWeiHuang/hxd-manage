@@ -35,7 +35,6 @@
 
 <script>
     import headTop from '../../components/headTop'
-    import addLoanRate from './addLoanRate'
     import {adminList, adminCount} from '@/api/getData'
     export default {
         data(){
