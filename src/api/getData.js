@@ -226,3 +226,14 @@ export const getAddressById = address_id => fetch('/v1/addresse/' + address_id);
  */
 
 export const getUserCity = () => fetch('/v1/user/city/count');
+
+/**
+ * 获取loanCount
+ */
+export const getLoanCount = date => fetch('/loan/count');
+
+/**
+ * 
+ */
+
+export const getLoanList = date => fetch('/loan/order/' + date + '/count');

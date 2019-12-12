@@ -11,8 +11,7 @@ const addGoods = r => require.ensure([], () => r(require('@/page/addGoods')), 'a
 const userList = r => require.ensure([], () => r(require('@/page/userList')), 'userList');
 const shopList = r => require.ensure([], () => r(require('@/page/shopList')), 'shopList');
 const foodList = r => require.ensure([], () => r(require('@/page/foodList')), 'foodList');
-const orderList = r => require.ensure([], () => r(require('@/page/orderList')), 'orderList');
-const adminList = r => require.ensure([], () => r(require('@/page/adminList')), 'adminList');
+const adminList = r => require.ensure([], () => r(require('@/page/admin/adminList')), 'adminList');
 const visitor = r => require.ensure([], () => r(require('@/page/visitor')), 'visitor');
 const newMember = r => require.ensure([], () => r(require('@/page/newMember')), 'newMember');
 const uploadImg = r => require.ensure([], () => r(require('@/page/uploadImg')), 'uploadImg');
@@ -20,6 +19,8 @@ const vueEdit = r => require.ensure([], () => r(require('@/page/vueEdit')), 'vue
 const adminSet = r => require.ensure([], () => r(require('@/page/adminSet')), 'adminSet');
 const sendMessage = r => require.ensure([], () => r(require('@/page/sendMessage')), 'sendMessage');
 const explain = r => require.ensure([], () => r(require('@/page/explain')), 'explain');
+const loanList = r => require.ensure([], () => r(require('@/page/loan/loanList')), 'loanList');
+const loanrateList = r => require.ensure([], () => r(require('@/page/loanrate/loanrateList')), 'loanrateList');
 
 const routes = [
 	{
@@ -47,16 +48,12 @@ const routes = [
 			component: userList,
 			meta: ['数据管理', '用户列表'],
 		},{
-			path: '/shopList',
-			component: shopList,
-			meta: ['数据管理', '商家列表'],
+			path: '/loanrateList',
+			component: loanrateList,
+			meta: ['数据管理', '利率管理'],
 		},{
-			path: '/foodList',
-			component: foodList,
-			meta: ['数据管理', '食品列表'],
-		},{
-			path: '/orderList',
-			component: orderList,
+			path: '/loanList',
+			component: loanList,
 			meta: ['数据管理', '订单列表'],
 		},{
 			path: '/adminList',
