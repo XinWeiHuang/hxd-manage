@@ -4,24 +4,18 @@ import fetch from '@/config/fetch'
  * 获取贷款数量
  */
 export const getLoanCount = () => fetch('/loan/count/');
-
 /**
  * 获取贷款列表
  */
 export const getLoanList = data => fetch('/loan/list/', data);
-
-
-
+/**
+ * 获取订单状态下拉框
+ */
+export const getLoanStatusOps = () => fetch('/system/auditStatusOps/')
 
 
 
 /*=============================================================================*/
-
-
-
-
-
-
 
 
 /**

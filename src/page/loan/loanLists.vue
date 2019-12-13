@@ -14,6 +14,9 @@
                             <el-form-item label="订单id">
                                 <span>{{ props.row.orderId }}</span>
                             </el-form-item>
+                            <el-form-item label="贷款人电话">
+                                <span>{{ props.row.phone }}</span>
+                            </el-form-item>
                             <el-form-item label="贷款人">
                                 <span>{{ props.row.userName }}</span>
                             </el-form-item>
@@ -51,6 +54,10 @@
                 <el-table-column
                     label="贷款人"
                     prop="userName">
+                </el-table-column>
+                <el-table-column
+                    label="贷款人电话"
+                    prop="phone">
                 </el-table-column>
                 <el-table-column
                     label="贷款金额"
@@ -96,64 +103,19 @@
                 </el-pagination>
             </div>
 
-            <el-dialog title="修改食品信息" v-model="dialogFormVisible">
+            <el-dialog title="修改贷款状态" v-model="dialogFormVisible">
                 <el-form :model="selectTable">
-                    <el-form-item label="食品名称" label-width="100px">
-                        <el-input v-model="selectTable.name" auto-complete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="食品介绍" label-width="100px">
-                        <el-input v-model="selectTable.description"></el-input>
-                    </el-form-item>
-                    <el-form-item label="食品分类" label-width="100px">
-                        <el-select v-model="selectIndex" :placeholder="selectMenu.label" @change="handleSelect">
+                    <el-form-item label="订单状态" label-width="100px">
+                        <el-select v-model="selectValue" :placeholder="selectMenu.label" @change="handleSelect">
                             <el-option
-                                v-for="item in menuOptions"
-                                :key="item.value"
+                                v-for="item in loanStatusOps"
+                                :key="item.index"
                                 :label="item.label"
-                                :value="item.index">
+                                :value="item.value">
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="食品图片" label-width="100px">
-                        <el-upload
-                            class="avatar-uploader"
-                            :action="baseUrl + '/v1/addimg/food'"
-                            :show-file-list="false"
-                            :on-success="handleServiceAvatarScucess"
-                            :before-upload="beforeAvatarUpload">
-                            <img v-if="selectTable.image_path" :src="baseImgPath + selectTable.image_path" class="avatar">
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
-                    </el-form-item>
                 </el-form>
-                <el-row style="overflow: auto; text-align: center;">
-                    <el-table
-                        :data="specs"
-                        style="margin-bottom: 20px;"
-                        :row-class-name="tableRowClassName">
-                        <el-table-column
-                            prop="specs"
-                            label="规格">
-                        </el-table-column>
-                        <el-table-column
-                            prop="packing_fee"
-                            label="包装费">
-                        </el-table-column>
-                        <el-table-column
-                            prop="price"
-                            label="价格">
-                        </el-table-column>
-                        <el-table-column label="操作" >
-                            <template slot-scope="scope">
-                                <el-button
-                                    size="small"
-                                    type="danger"
-                                    @click="deleteSpecs(scope.$index)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <el-button type="primary" @click="specsFormVisible = true" style="margin-bottom: 10px;">添加规格</el-button>
-                </el-row>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
                     <el-button type="primary" @click="updateFood">确 定</el-button>
@@ -161,31 +123,13 @@
             </el-dialog>
 
 
-            <el-dialog title="添加规格" v-model="specsFormVisible">
-                <el-form :rules="specsFormrules" :model="specsForm">
-                    <el-form-item label="规格" label-width="100px" prop="specs">
-                        <el-input v-model="specsForm.specs" auto-complete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="包装费" label-width="100px">
-                        <el-input-number v-model="specsForm.packing_fee" :min="0" :max="100"></el-input-number>
-                    </el-form-item>
-                    <el-form-item label="价格" label-width="100px">
-                        <el-input-number v-model="specsForm.price" :min="0" :max="10000"></el-input-number>
-                    </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="specsFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="addspecs">确 定</el-button>
-                </div>
-            </el-dialog>
         </div>
     </div>
 </template>
 
 <script>
 	import headTop from '@/components/headTop'
-	import {baseUrl, baseImgPath} from '@/config/env'
-	import {getLoanCount, getLoanList} from '@/api/getData'
+	import {getLoanCount, getLoanList, getLoanStatusOps} from '@/api/getData'
 	export default {
 		data(){
 			return {
@@ -197,9 +141,9 @@
 				currentPage: 1,
 				selectTable: {},
 				dialogFormVisible: false,
-				menuOptions: [],
+				loanStatusOps: [],
 				selectMenu: {},
-				selectIndex: null,
+				selectValue: null,
 				specsForm: {
 					specs: '',
 					packing_fee: 0,
@@ -245,14 +189,19 @@
 						throw new Error('获取数据失败');
 					}
 					this.getLoanLists();
+					this.getLoanStatusOps();
 				}catch(err){
 					console.log('获取数据失败', err);
 				}
 			},
-			async getLoanLists(){
+			async getLoanLists() {
 				const loanLists = await getLoanList({page: this.currentPage, size: this.size});
 				this.tableData = loanLists.data;
 			},
+			async getLoanStatusOps() {
+		        this.loanStatusOps = await getLoanStatusOps();
+	        },
+
 			tableRowClassName(row, index) {
 				if (index === 1) {
 					return 'info-row';
@@ -261,6 +210,7 @@
 				}
 				return '';
 			},
+
 			addspecs(){
 				this.specs.push({...this.specsForm});
 				this.specsForm.specs = '';
@@ -268,12 +218,15 @@
 				this.specsForm.price = 20;
 				this.specsFormVisible = false;
 			},
-			deleteSpecs(index){
+
+			deleteSpecs(index) {
 				this.specs.splice(index, 1);
 			},
+
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
 			},
+
 			handleCurrentChange(val) {
 				debugger
 				this.currentPage = val;
@@ -305,9 +258,14 @@
 					this.getMenu();
 				}
 			},
-			handleSelect(index){
-				this.selectIndex = index;
-				this.selectMenu = this.menuOptions[index];
+			handleSelect(value){
+				this.selectValue = value;
+				loanStatusOps.forEach(item=>{
+                    if (item.value == value) {
+						this.selectMenu = item
+                        return
+                    }
+                });
 			},
 			async handleDelete(index, row) {
 				try{
