@@ -250,3 +250,21 @@ export const getAddressById = address_id => fetch('/v1/addresse/' + address_id);
  */
 
 export const getUserCity = () => fetch('/v1/user/city/count');
+
+/**
+ * 获取用户信息
+ */
+
+export const getAdminList = () => fetch('/admin/find');
+
+/**
+ * 获取用户信息
+ */
+
+export const getAdminCount = () => fetch('/admin/count');
+
+export const deleteAdmin = date => fetch('/admin/delete/'+ date, {}, 'DELETE');
+
+export const addAdmin = data => fetch('/admin/add', data, 'POST');
+
+
