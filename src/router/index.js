@@ -6,6 +6,9 @@ Vue.use(Router)
 const login = r => require.ensure([], () => r(require('@/page/login')), 'login');
 const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manage');
 const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
+const loanLists = r => require.ensure([], () => r(require('@/page/loan/loanLists')), 'loanLists');
+
+
 
 const addShop = r => require.ensure([], () => r(require('@/page/addShop')), 'addShop');
 const addGoods = r => require.ensure([], () => r(require('@/page/addGoods')), 'addGoods');
@@ -20,7 +23,6 @@ const vueEdit = r => require.ensure([], () => r(require('@/page/vueEdit')), 'vue
 const adminSet = r => require.ensure([], () => r(require('@/page/adminSet')), 'adminSet');
 const sendMessage = r => require.ensure([], () => r(require('@/page/sendMessage')), 'sendMessage');
 const explain = r => require.ensure([], () => r(require('@/page/explain')), 'explain');
-const loanList = r => require.ensure([], () => r(require('@/page/loan/loanList')), 'loanList');
 const loanrateList = r => require.ensure([], () => r(require('@/page/loanrate/loanrateList')), 'loanrateList');
 
 const routes = [
@@ -37,6 +39,10 @@ const routes = [
 			component: home,
 			meta: [],
 		},{
+            path: '/foodList',
+            component: foodList,
+            meta: ['数据管理', '食品管理'],
+        },{
 			path: '/addShop',
 			component: addShop,
 			meta: ['添加数据', '添加商铺'],
@@ -53,8 +59,8 @@ const routes = [
 			component: loanrateList,
 			meta: ['数据管理', '利率管理'],
 		},{
-			path: '/loanList',
-			component: loanList,
+			path: '/loanLists',
+			component: loanLists,
 			meta: ['数据管理', '订单列表'],
 		},{
 			path: '/adminList',

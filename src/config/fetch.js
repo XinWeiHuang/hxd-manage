@@ -1,4 +1,5 @@
 import { baseUrl } from './env'
+import {dateFormat} from "./mUtils";
 
 export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 	type = type.toUpperCase();
@@ -9,7 +10,8 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 		Object.keys(data).forEach(key => {
 			dataStr += key + '=' + data[key] + '&';
 		})
-
+        /*TODO 解决get缓存问题*/
+        dataStr += 'ldkfj=' + dateFormat("YYYY-mm-dd HH:MM:SS",new Date()) + '&';
 		if (dataStr !== '') {
 			dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
 			url = url + '?' + dataStr;

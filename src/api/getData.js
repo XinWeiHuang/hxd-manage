@@ -1,6 +1,30 @@
 import fetch from '@/config/fetch'
 
 /**
+ * 获取贷款数量
+ */
+export const getLoanCount = () => fetch('/loan/count/');
+
+/**
+ * 获取贷款列表
+ */
+export const getLoanList = data => fetch('/loan/list/', data);
+
+
+
+
+
+
+/*=============================================================================*/
+
+
+
+
+
+
+
+
+/**
  * 登陆
  */
 
@@ -226,14 +250,3 @@ export const getAddressById = address_id => fetch('/v1/addresse/' + address_id);
  */
 
 export const getUserCity = () => fetch('/v1/user/city/count');
-
-/**
- * 获取loanCount
- */
-export const getLoanCount = date => fetch('/loan/count');
-
-/**
- * 
- */
-
-export const getLoanList = date => fetch('/loan/order/' + date + '/count');

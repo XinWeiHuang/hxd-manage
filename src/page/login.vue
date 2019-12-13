@@ -63,6 +63,7 @@
 		                        type: 'success',
 		                        message: '登录成功'
 		                    });
+							/*TODO set user to lcoale*/
 							this.$router.push('manage')
 						}else{
 							this.$message({
@@ -84,6 +85,7 @@
 		watch: {
 			adminInfo: function (newValue){
 				if (newValue.id) {
+                    /*TODO set user to lcoale*/
 					this.$message({
                         type: 'success',
                         message: '检测到您之前登录过，将自动登录'
