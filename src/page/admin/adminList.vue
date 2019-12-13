@@ -84,21 +84,21 @@ export default {
       //初始化数据
     async initData() {
       try {
-        const countData = await getAdminCount();
+        const countData = await getAdminCount()
         if (countData.status == 1) {
-          this.count = countData.data;
+          this.count = countData.data
         } else {
-          throw new Error("获取数据失败");
+          throw new Error("获取数据失败")
         }
-        this.getAdmin();
+        this.getAdmin()
       } catch (err) {
-        console.log("获取数据失败", err);
+        console.log("获取数据失败", err)
       }
     },
     // 查询数据列表
     async getAdmin() {
       try {
-        const res = await getAdminList();
+        const res = await getAdminList()
         if (res.status == 1) {
           this.data = [];
           res.data.forEach(item => {
@@ -107,85 +107,85 @@ export default {
               role: "管理员",
               phone: item.phone,
               id: item.id
-            };
-            this.data.push(tableItem);
+            }
+            this.data.push(tableItem)
           });
         } else {
-          throw new Error(res.message);
+          throw new Error(res.message)
         }
       } catch (err) {
-        console.log("获取数据失败", err);
+        console.log("获取数据失败", err)
       }
     },
     //根据id删除
     async handleDelete(index, row) {
       try {
-        const data = { id: row.id };
-        const res = await deleteAdmin(row.id);
+        const data = { id: row.id }
+        const res = await deleteAdmin(row.id)
         if (res.status == 1) {
           this.$message({
             type: "success",
             message: "删除成功"
-          });
-          this.initData();
+          })
+          this.initData()
         } else {
-          throw new Error(res.message);
+          throw new Error(res.message)
         }
       } catch (err) {
         this.$message({
           type: "error",
           message: err.message
-        });
-        console.log("删除失败");
+        })
+        console.log("删除失败")
       }
     },
     //添加按钮
     async add() {
-      this.dialogFormVisible = true;
+      this.dialogFormVisible = true
     },
     async resetForm() {
       this.adminForm = {
         password: "",
         phone: ""
-      };
+      }
     },
     //提交添加数据
     submitForm(form) {
       this.$refs[form].validate(async valid => {
         if (valid) {
-          this.adminForm.idcard = "back";
-          this.adminForm.idcardResource = "back";
-          this.adminForm.role = 0;
-          let result = await addAdmin(this.adminForm);
+          this.adminForm.idcard = "back"
+          this.adminForm.idcardResource = "back"
+          this.adminForm.role = 0
+          let result = await addAdmin(this.adminForm)
           if (result.status == 1) {
             this.$message({
               type: "success",
               message: "添加成功"
-            });
-            this.initData();
-            this.dialogFormVisible = false;
+            })
+            this.initData()
+            this.dialogFormVisible = false
             this.adminForm = {
               password: "",
               phone: ""
-            };
+            }
           } else {
             this.$message({
               type: "error",
               message: result.message
-            });
+            })
           }
         } else {
           this.$notify.error({
             title: "错误",
             message: "请检查输入是否正确",
             offset: 100
-          });
-          return false;
+          })
+          return false
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="less">
