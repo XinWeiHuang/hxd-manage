@@ -16,7 +16,18 @@ export const getLoanStatusOps = () => fetch('/system/auditStatusOps/')
  * 需要订单状态
  * @param data
  */
-export const updateLoanStatus = data => fetch('/loan/' + data.orderId + '/' + data.status, {}, 'POST')
+export const updateLoanStatus = data => fetch('/loan/' + data.orderId, data, 'POST')
+
+/**
+ * 查询订单操作日志
+ * @param data
+ */
+export const getOperLogs = loanId => fetch('/loan/logs/' + loanId)
+/**
+ * 删除贷款记录
+ * @param data
+ */
+export const deleteLoan = loanId => fetch('/loan/' + loanId, {}, "DELETE")
 
 
 
@@ -286,13 +297,13 @@ export const getLoanRateCount = () => fetch('/loanRate/count');
 
 /**
  * 删除管理员
- * @param {管理员id} date 
+ * @param {管理员id} date
  */
 export const deleteLoanRate = date => fetch('/loanRate/delete/'+ date, {}, 'DELETE');
 
 /**
  * 增加管理员
- * @param {*} data 
+ * @param {*} data
  */
 export const saveLoanRate = data => fetch('/loanRate/save', data, 'POST');
 
