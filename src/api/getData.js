@@ -7,17 +7,7 @@ export const getLoanCount = () => fetch('/loan/count/');
 /**
  * 获取贷款列表
  */
-export const getLoanList = data => fetch('/loan/list/', data);
-/**
- * 获取订单状态下拉框
- */
-export const getLoanStatusOps = () => fetch('/system/auditStatusOps/')
-/**
- * 需要订单状态
- * @param data
- */
-export const updateLoanStatus = data => fetch('/loan/' + data.orderId, data, 'POST')
-
+export const getLoanList = data => fetch('/loan/list/', data)
 /**
  * 查询订单操作日志
  * @param data
@@ -28,12 +18,32 @@ export const getOperLogs = loanId => fetch('/loan/logs/' + loanId)
  * @param data
  */
 export const deleteLoan = loanId => fetch('/loan/' + loanId, {}, "DELETE")
+/**
+ * 需要订单状态
+ * @param data
+ */
+export const updateLoanStatus = data => fetch('/loan/' + data.orderId, data, 'POST')
 
+/*-------------------------订单状态接口------------------------------*/
+/**
+ * 获取订单状态
+ */
+export const getLoanStatus = () => fetch('/loanStatus')
 
-
-/*=============================================================================*/
-
-
+/**
+ * 获取订单状态下拉框
+ */
+export const getLoanStatusOps = () => fetch('/system/auditStatusOps/')
+/**
+ * 删除订单状态
+ * @param data
+ */
+export const deleteLoanStatus = data => fetch('/loanStatus/' + data, {}, 'DELETE')
+/**
+ *
+ * @param data
+ */
+export const saveLoanStatus = data => fetch('/loanStatus/', data, 'POST')
 /**
  * 登陆
  */
@@ -51,6 +61,20 @@ export const signout = () => fetch('/admin/signout', {}, 'POST');
  */
 
 export const getAdminInfo = () => fetch('/admin');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * api请求量

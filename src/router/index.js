@@ -7,6 +7,7 @@ const login = r => require.ensure([], () => r(require('@/page/login')), 'login')
 const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manage');
 const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
 const loanLists = r => require.ensure([], () => r(require('@/page/loan/loanLists')), 'loanLists');
+const loanStatusList = r => require.ensure([], () => r(require('@/page/loanStatus/loanStatusList')), 'loanStatusList');
 
 
 
@@ -39,8 +40,8 @@ const routes = [
 			component: home,
 			meta: [],
 		},{
-            path: '/foodList',
-            component: foodList,
+            path: '/loanStatusList',
+            component: loanStatusList,
             meta: ['数据管理', '食品管理'],
         },{
 			path: '/addShop',

@@ -11,7 +11,7 @@
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="订单id">
+                            <el-form-item label="订单号">
                                 <span>{{ props.row.id }}</span>
                             </el-form-item>
                             <el-form-item label="贷款人">
