@@ -12,6 +12,11 @@ export const getLoanList = data => fetch('/loan/list/', data);
  * 获取订单状态下拉框
  */
 export const getLoanStatusOps = () => fetch('/system/auditStatusOps/')
+/**
+ * 需要订单状态
+ * @param data
+ */
+export const updateLoanStatus = data => fetch('/loan/' + data.orderId + '/' + data.status, {}, 'POST')
 
 
 
@@ -258,13 +263,13 @@ export const getAdminCount = () => fetch('/admin/count');
 
 /**
  * 删除管理员
- * @param {管理员id} date 
+ * @param {管理员id} date
  */
 export const deleteAdmin = date => fetch('/admin/delete/'+ date, {}, 'DELETE');
 
 /**
  * 增加管理员
- * @param {*} data 
+ * @param {*} data
  */
 export const addAdmin = data => fetch('/admin/add', data, 'POST');
 

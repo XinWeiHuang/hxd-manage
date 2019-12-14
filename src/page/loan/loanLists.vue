@@ -118,7 +118,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="updateFood">确 定</el-button>
+                    <el-button type="primary" @click="updateLoanStatus">确 定</el-button>
                 </div>
             </el-dialog>
 
@@ -129,11 +129,11 @@
 
 <script>
 	import headTop from '@/components/headTop'
-	import {getLoanCount, getLoanList, getLoanStatusOps} from '@/api/getData'
+	import {getLoanCount, getLoanList, getLoanStatusOps, updateLoanStatus} from '@/api/getData'
 	export default {
 		data(){
 			return {
-				restaurant_id: null,
+				orderId: null,
 				city: {},
 				size: 5,
 				count: 0,
@@ -234,29 +234,22 @@
 			},
 			expand(row, status){
 				if (status) {
-					this.getSelectItemData(row)
+					this.createFormData(row)
 				}else{
 					const index = this.expendRow.indexOf(row.index);
 					this.expendRow.splice(index, 1)
 				}
 			},
 			handleEdit(row) {
-				this.getSelectItemData(row, 'edit')
+				this.createFormData(row, 'edit')
 				this.dialogFormVisible = true;
 			},
-			async getSelectItemData(row, type){
-				const restaurant = await getResturantDetail(row.restaurant_id);
-				const category = await getMenuById(row.category_id)
-				this.selectTable = {...row, ...{restaurant_name: restaurant.name, restaurant_address: restaurant.address, category_name: category.name}};
-
-				this.selectMenu = {label: category.name, value: row.category_id}
-				this.tableData.splice(row.index, 1, {...this.selectTable});
-				this.$nextTick(() => {
-					this.expendRow.push(row.index);
-				})
-				if (type == 'edit' && this.restaurant_id != row.restaurant_id) {
-					this.getMenu();
-				}
+			createFormData(row, type){
+				debugger
+                this.orderId = row.id
+				this.selectTable = row
+				this.selectValue =row.status
+				this.selectMenu = {label: row.statusName, value: row.status}
 			},
 			handleSelect(value){
 				this.selectValue = value;
@@ -306,12 +299,11 @@
 				}
 				return isRightType && isLt2M;
 			},
-			async updateFood(){
+			async updateLoanStatus(){
 				this.dialogFormVisible = false;
 				try{
-					const subData = {new_category_id: this.selectMenu.value, specs: this.specs};
-					const postData = {...this.selectTable, ...subData};
-					const res = await updateFood(postData)
+					const postData = {'orderId': this.orderId, 'status': this.selectValue};
+					const res = await updateLoanStatus(postData)
 					if (res.status == 1) {
 						this.$message({
 							type: 'success',
@@ -324,7 +316,7 @@
 							message: res.message
 						});
 					}
-				}catch(err){
+                } catch (err){
 					console.log('更新餐馆信息失败', err);
 				}
 			},
