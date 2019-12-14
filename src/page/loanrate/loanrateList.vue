@@ -28,7 +28,7 @@
     <el-dialog title="添加月利率" :visible.sync="dialogFormVisible">
       <el-form :model="form" ref="form" label-width="140px">
         <el-form-item label="月数" prop="month">
-          <el-input v-model="form.month" type="number" ></el-input>
+          <el-input v-model="form.month" type="number"></el-input>
         </el-form-item>
         <el-form-item label="月利率（单位：万）" prop="rate">
           <el-input v-model="form.rate" type="number"></el-input>
@@ -106,7 +106,8 @@ export default {
     },
     async getLoanRate() {
       try {
-        const res = await getLoanRateList();
+        const param = { split: false };
+        const res = await getLoanRateList(param);
         if (res.status == 1) {
           this.tableData = [];
           res.data.forEach(item => {
@@ -167,7 +168,17 @@ export default {
         }
       });
     },
+
     async handleDelete(index, row) {
+      this.$confirm("此操作将删除月利率配置, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        this.doDelete(index, row);
+      });
+    },
+    async doDelete(index, row) {
       try {
         const data = { id: row.id };
         const res = await deleteLoanRate(row.id);
@@ -188,6 +199,7 @@ export default {
         console.log("删除失败");
       }
     },
+
     async handleEdit(index, row) {
       this.form.month = row.month;
       this.form.rate = row.rate;
