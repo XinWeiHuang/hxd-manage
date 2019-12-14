@@ -265,22 +265,22 @@ export const getUserCity = () => fetch('/v1/user/city/count');
  * 查询管理员列表
  */
 
-export const getAdminList = () => fetch('/admin/find');
+export const getAdminList = data => fetch('/admin/findPage',data);
 
 /**
  * 查询管理员数量
  */
-export const getAdminCount = () => fetch('/admin/count');
+export const getAdminCount = data => fetch('/admin/count',data);
 
 /**
  * 删除管理员
- * @param {管理员id} date
+ * @param {管理员id} date 
  */
 export const deleteAdmin = date => fetch('/admin/delete/'+ date, {}, 'DELETE');
 
 /**
  * 增加管理员
- * @param {*} data
+ * @param {*} data 
  */
 export const addAdmin = data => fetch('/admin/add', data, 'POST');
 
@@ -288,7 +288,7 @@ export const addAdmin = data => fetch('/admin/add', data, 'POST');
  * 查询管理员列表
  */
 
-export const getLoanRateList = () => fetch('/loanRate/find');
+export const getLoanRateList = data => fetch('/loanRate/find',data);
 
 /**
  * 查询管理员数量

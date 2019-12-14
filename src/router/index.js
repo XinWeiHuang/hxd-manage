@@ -12,7 +12,7 @@ const loanLists = r => require.ensure([], () => r(require('@/page/loan/loanLists
 
 const addShop = r => require.ensure([], () => r(require('@/page/addShop')), 'addShop');
 const addGoods = r => require.ensure([], () => r(require('@/page/addGoods')), 'addGoods');
-const userList = r => require.ensure([], () => r(require('@/page/userList')), 'userList');
+const userList = r => require.ensure([], () => r(require('@/page/user/userList')), 'userList');
 const shopList = r => require.ensure([], () => r(require('@/page/shopList')), 'shopList');
 const foodList = r => require.ensure([], () => r(require('@/page/foodList')), 'foodList');
 const adminList = r => require.ensure([], () => r(require('@/page/admin/adminList')), 'adminList');
