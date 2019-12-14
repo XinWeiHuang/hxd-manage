@@ -14,9 +14,6 @@
       </el-table>
       <div class="Pagination" style="text-align: left;margin-top: 10px;">
         <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
           :page-size="20"
           layout="total, prev, pager, next"
           :total="count"
@@ -27,10 +24,10 @@
     <el-dialog title="添加管理员" :visible.sync="dialogFormVisible">
       <el-form :model="adminForm" :rules="rules" ref="adminForm" label-width="140px">
         <el-form-item label="手机号" prop="phone">
-          <el-input v-model="adminForm.phone"></el-input>
+          <el-input v-model="adminForm.phone" type="number" ></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="adminForm.password"></el-input>
+          <el-input v-model="adminForm.password" ></el-input>
         </el-form-item>
         <el-form-item>
           <el-button style="float:right;" type="primary" @click="submitForm('adminForm')">确定</el-button>
@@ -144,6 +141,7 @@ export default {
       this.dialogFormVisible = true
     },
     async resetForm() {
+      this.dialogFormVisible = false
       this.adminForm = {
         password: "",
         phone: ""

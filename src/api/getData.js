@@ -268,4 +268,27 @@ export const deleteAdmin = date => fetch('/admin/delete/'+ date, {}, 'DELETE');
  */
 export const addAdmin = data => fetch('/admin/add', data, 'POST');
 
+/**
+ * 查询管理员列表
+ */
+
+export const getLoanRateList = () => fetch('/loanRate/find');
+
+/**
+ * 查询管理员数量
+ */
+export const getLoanRateCount = () => fetch('/loanRate/count');
+
+/**
+ * 删除管理员
+ * @param {管理员id} date 
+ */
+export const deleteLoanRate = date => fetch('/loanRate/delete/'+ date, {}, 'DELETE');
+
+/**
+ * 增加管理员
+ * @param {*} data 
+ */
+export const saveLoanRate = data => fetch('/loanRate/save', data, 'POST');
+
 
