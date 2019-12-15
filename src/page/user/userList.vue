@@ -40,9 +40,11 @@
         <el-table-column label="手机号" prop="phone"></el-table-column>
         <el-table-column label="身份证" prop="idcard"></el-table-column>
         <el-table-column label="银行卡" prop="bankCardNum"></el-table-column>
+        <el-table-column label="余额" prop="money"></el-table-column>
         <el-table-column label="操作" width="300">
           <template slot-scope="scope">
-            <el-button size="small" @click="handleWallet(scope.$index, scope.row)">钱包</el-button>
+            <el-button size="small" @click="handleWallet(scope.$index, scope.row)">修改钱包</el-button>
+            <el-button size="small" @click="handleWalletDraw(scope.$index, scope.row)">提现记录</el-button>
             <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -70,6 +72,12 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+    <el-dialog title="提现记录" :visible.sync="walletDrawVisible">
+      <el-table :data="drawData" style="width: 100%">
+        <el-table-column label="提现金额" prop="drawMoney"></el-table-column>
+        <el-table-column label="提现时间" prop="createTime"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -80,7 +88,8 @@ import {
   getAdminCount,
   deleteAdmin,
   getUserWallet,
-  saveWallet
+  saveWallet,
+  getUserWalletDraw
 } from "@/api/getData";
 export default {
   data() {
@@ -98,7 +107,9 @@ export default {
       form: {
         money: 0,
         newMoney: 0
-      }
+      },
+      walletDrawVisible: false,
+      drawData: []
     };
   },
   components: {
@@ -137,8 +148,11 @@ export default {
               phone: item.phone,
               id: item.id,
               idcard: item.idcard,
-              bankCardNum: item.bankCardNum
+              bankCardNum: item.bankCardNum,
+              money:item.money
             };
+            const money = item.money ?item.money:0
+            tableItem.money =money
             if (item.userWorkInfo) {
               tableItem.companyName = item.userWorkInfo.companyName;
               tableItem.companyAddress = item.userWorkInfo.companyAddress;
@@ -200,16 +214,15 @@ export default {
       this.page = val;
       this.getAdmin();
     },
-   async handleWallet(index, row) {
+    async handleWallet(index, row) {
       try {
         const param = { userId: row.id };
         const wallet = await getUserWallet(param);
-        console.log(wallet,'444444444444444')
         if (wallet.status == 1) {
           this.form.money = wallet.data.money;
           this.form.newMoney = wallet.data.money;
           this.form.id = wallet.data.id;
-          this.form.userId = row.id
+          this.form.userId = row.id;
           this.dialogFormVisible = true;
         } else {
           throw new Error("获取数据失败");
@@ -218,14 +231,13 @@ export default {
         console.log("获取数据失败", err);
       }
     },
-    resetForm(){
-      this.form.id = null
-      this.form.money = 0
-      this.form.newMoney = 0
-      this.form.userId = null
-      this.dialogFormVisible = false
-    }
-    ,
+    resetForm() {
+      this.form.id = null;
+      this.form.money = 0;
+      this.form.newMoney = 0;
+      this.form.userId = null;
+      this.dialogFormVisible = false;
+    },
     submitForm(form) {
       this.$refs[form].validate(async valid => {
         if (valid) {
@@ -257,6 +269,27 @@ export default {
         }
       });
     },
+    async handleWalletDraw(index, row) {
+      this.drawData = [];
+      try {
+        const param = { userId: row.id };
+        const walletDrawData = await getUserWalletDraw(param);
+        if (walletDrawData.status == 1) {
+          walletDrawData.data.forEach(item => {
+            const tableItem = {
+              createTime: item.createTime,
+              drawMoney: item.drawMoney
+            };
+            this.drawData.push(tableItem)
+          });
+        } else {
+          throw new Error("获取数据失败");
+        }
+      } catch (err) {
+        console.log("获取数据失败", err);
+      }
+      this.walletDrawVisible = true;
+    }
   }
 };
 </script>

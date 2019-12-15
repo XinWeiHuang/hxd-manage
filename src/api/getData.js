@@ -309,30 +309,45 @@ export const deleteAdmin = date => fetch('/admin/delete/'+ date, {}, 'DELETE');
 export const addAdmin = data => fetch('/admin/add', data, 'POST');
 
 /**
- * 查询管理员列表
+ * 查询月利率
  */
 
 export const getLoanRateList = data => fetch('/loanRate/find',data);
 
 /**
- * 查询管理员数量
+ * 查询月利率数量
  */
 export const getLoanRateCount = () => fetch('/loanRate/count');
 
 /**
- * 删除管理员
- * @param {管理员id} date
+ * 删除月利率
+ * @param {id} date
  */
 export const deleteLoanRate = date => fetch('/loanRate/delete/'+ date, {}, 'DELETE');
 
 /**
- * 增加管理员
+ * 增加月利率
  * @param {*} data
  */
 export const saveLoanRate = data => fetch('/loanRate/save', data, 'POST');
 
+/**
+ * 获取用户钱包
+ * @param {*} data 
+ */
 export const getUserWallet = data => fetch('/wallet/findByUserId', data);
 
+/**
+ * 修改余额
+ * @param {*} data 
+ */
 export const saveWallet = data => fetch('/wallet/save', data, 'POST');
+
+/**
+ * 查询提现记录
+ * @param {*} data 
+ */
+export const getUserWalletDraw = data => fetch('/walletDraw/findByUserId', data);
+
 
 
