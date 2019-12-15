@@ -137,7 +137,7 @@
                     style="width: 100%">
                     <el-table-column
                         label="修改人"
-                        prop="auditUserName">
+                        prop="userName">
                     </el-table-column>
                     <el-table-column
                         label="修改前状态"
@@ -174,7 +174,7 @@
 				dialogFormVisible: false,
                 dialogOperLogsVisible: false,
 				loanStatusOps: [],
-				selectMenu: {},
+				selectMenu: {vaule:'',label: '请选择'},
 				selectValue: null,
 				expendRow: [],
                 editParam : {
@@ -196,7 +196,6 @@
 			async initData(){
 				try{
 					this.getLoanLists();
-					this.getLoanStatusOps();
 				}catch(err){
 					console.log('获取数据失败', err);
 				}
@@ -211,10 +210,6 @@
 				const loanLists = await getLoanList({page: this.currentPage, size: this.size});
 				this.tableData = loanLists.data;
 			},
-			async getLoanStatusOps() {
-		        this.loanStatusOps = await getLoanStatusOps();
-	        },
-
 			tableRowClassName(row, index) {
 				if (index === 1) {
 					return 'info-row';
@@ -243,6 +238,7 @@
 			},
 
 			handleEdit(row) {
+				this.getLoanStatusOps(row);
 				this.createFormData(row, 'edit')
 				this.dialogFormVisible = true;
 			},
@@ -251,16 +247,24 @@
                 this.editParam.orderId = row.id
 				this.selectValue = row.status
                 this.editParam.remark = ''
-				this.selectMenu = {label: '请选择'}
+			},
+			async getLoanStatusOps(row) {
+				var ops = await getLoanStatusOps()
+				var exits = false;
+				ops.forEach(item=>{
+				    debugger;
+					if (item.value == row.status) {
+                        exits = true
+						return
+					}
+				});
+                if (!exits) {
+					ops.push({label: row.statusName, value:  row.status, index: row.status})
+                }
+				this.loanStatusOps = ops
 			},
 			handleSelect(value){
 				this.selectValue = value;
-				this.loanStatusOps.forEach(item=>{
-                    if (item.value == value) {
-						//this.selectMenu = item
-                        return
-                    }
-                });
 			},
             handleDelete(row) {
 				var _this = this

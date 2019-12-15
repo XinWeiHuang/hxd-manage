@@ -5,7 +5,7 @@
     <div class="table_container">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="month" label="月数"></el-table-column>
-        <el-table-column prop="rate" label="利率（单位：万）"></el-table-column>
+        <el-table-column prop="rate" label="利率（单位:BP）"></el-table-column>
         <!-- <el-table-column prop="create_time" label="添加日期"></el-table-column> -->
         <el-table-column label="操作" width="160">
           <template slot-scope="scope">
