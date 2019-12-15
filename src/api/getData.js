@@ -298,13 +298,13 @@ export const getAdminCount = data => fetch('/admin/count',data);
 
 /**
  * 删除管理员
- * @param {管理员id} date 
+ * @param {管理员id} date
  */
 export const deleteAdmin = date => fetch('/admin/delete/'+ date, {}, 'DELETE');
 
 /**
  * 增加管理员
- * @param {*} data 
+ * @param {*} data
  */
 export const addAdmin = data => fetch('/admin/add', data, 'POST');
 
