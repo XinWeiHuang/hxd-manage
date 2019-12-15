@@ -64,6 +64,7 @@
 		                        message: '登录成功'
 		                    });
 							/*TODO set user to lcoale*/
+                            this.$store.commit('saveAdminInfo', res.data)
 							this.$router.push('manage')
 						}else{
 							this.$message({

@@ -9,6 +9,15 @@ Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
 
+router.beforeEach((to, from, next)=> {
+    const { id } = store.state.adminInfo;
+    if (!id && to.path != '/') {
+        next({ path: '/' })
+    } else {
+        next()
+    }
+})
+
 new Vue({
 	el: '#app',
 	router,

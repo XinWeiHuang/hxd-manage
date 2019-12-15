@@ -7,7 +7,7 @@
 		</el-breadcrumb>
 		<el-dropdown @command="handleCommand" menu-align='start'>
             <!--TODO SHOU USER NAME-->
-            <a href="#">Admin</a>
+            <a href="javascript:void(0)" class="user-name">{{ $store.state.adminInfo.name }}</a>
 			<!--<img :src="baseImgPath + adminInfo.avatar" class="avator">-->
 			<el-dropdown-menu slot="dropdown">
 				<el-dropdown-item command="home">首页</el-dropdown-item>
@@ -61,7 +61,7 @@
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	@import '../style/mixin';
 	.header_container{
 		background-color: #EFF2F7;
@@ -78,5 +78,9 @@
 	}
 	.el-dropdown-menu__item{
         text-align: center;
+    }
+    .user-name {
+        margin-right: 10px;
+        text-decoration: underline;
     }
 </style>

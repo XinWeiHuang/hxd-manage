@@ -31,5 +31,5 @@ const routes = [
 
 export default new Router({
 	routes,
-	strict: process.env.NODE_ENV !== 'production',
+	strict: process.env.NODE_ENV !== 'production'
 })
