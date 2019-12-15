@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import headTop from '../components/headTop'
+    import headTop from '../../components/headTop'
     import { quillEditor } from 'vue-quill-editor'
 
     export default {
@@ -24,7 +24,7 @@
             return {
                 content: '<h3>文本编辑</h3>',
 			    editorOption: {
-			        
+
 		        }
             }
         },
@@ -50,7 +50,7 @@
 </script>
 
 <style lang="less">
-	@import '../style/mixin';
+	@import '../../style/mixin';
 	.edit_container{
 		padding: 40px;
 		margin-bottom: 40px;

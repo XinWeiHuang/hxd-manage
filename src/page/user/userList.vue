@@ -37,9 +37,9 @@
           </template>
         </el-table-column>
         <el-table-column label="用户名" prop="name"></el-table-column>
-        <el-table-column label="手机号" prop="phone"></el-table-column>
-        <el-table-column label="身份证" prop="idcard"></el-table-column>
-        <el-table-column label="银行卡" prop="bankCardNum"></el-table-column>
+        <el-table-column label="手机号" prop="phone" width="150"></el-table-column>
+        <el-table-column label="身份证" prop="idcard" width="200"></el-table-column>
+        <el-table-column label="银行卡" prop="bankCardNum" width="200"></el-table-column>
         <el-table-column label="余额" prop="money"></el-table-column>
         <el-table-column label="操作" width="300">
           <template slot-scope="scope">

@@ -142,7 +142,7 @@
 </template>
 
 <script>
-import headTop from "../components/headTop";
+import headTop from "../../components/headTop";
 import { baseUrl, baseImgPath } from "@/config/env";
 import {
   getFoods,
@@ -393,7 +393,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../style/mixin";
+@import "../../style/mixin";
 .demo-table-expand {
   font-size: 0;
 }

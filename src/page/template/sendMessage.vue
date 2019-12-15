@@ -1,15 +1,15 @@
 <template>
     <div class="fillcontain">
-        uploadImg
+        sendMessage
     </div>
 </template>
 
 <script>
     export default {
-    	
+
     }
 </script>
 
 <style lang="less">
-	@import '../style/mixin';
+	@import '../../style/mixin';
 </style>

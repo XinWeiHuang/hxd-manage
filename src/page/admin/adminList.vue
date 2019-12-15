@@ -5,7 +5,7 @@
     <div class="table_container">
       <el-table :data="data" style="width: 100%">
         <el-table-column prop="name" label="用户名"></el-table-column>
-        <el-table-column prop="phone" label="手机号"></el-table-column>
+        <el-table-column prop="phone" label="登陆名"></el-table-column>
         <el-table-column prop="role" label="角色"></el-table-column>
         <el-table-column label="操作" width="160">
           <template slot-scope="scope">
@@ -28,8 +28,8 @@
         <el-form-item label="用户名" prop="phone">
           <el-input v-model="adminForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-input v-model="adminForm.phone" type="number"></el-input>
+        <el-form-item label="登录名" prop="phone">
+          <el-input v-model="adminForm.phone"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="adminForm.password"></el-input>
@@ -160,10 +160,10 @@ export default {
     },
     //添加按钮
     async add() {
-      this.dialogFormVisible = true;
+		this.resetForm()
+    	this.dialogFormVisible = true
     },
-    async resetForm() {
-      this.dialogFormVisible = false;
+    resetForm() {
       this.adminForm = {
         password: "",
         phone: "",

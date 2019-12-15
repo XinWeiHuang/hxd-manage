@@ -126,9 +126,10 @@ export default {
       }
     },
     add() {
-      this.dialogFormVisible = true;
+    	this.resetForm()
+        this.dialogFormVisible = true;
     },
-    async resetForm() {
+    resetForm() {
       this.dialogFormVisible = false;
       this.form = {
         month: null,
