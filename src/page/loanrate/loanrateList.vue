@@ -30,7 +30,7 @@
         <el-form-item label="月数" prop="month">
           <el-input v-model="form.month" type="number"></el-input>
         </el-form-item>
-        <el-form-item label="月利率（单位：万）" prop="rate">
+        <el-form-item label="月利率（单位：BP）" prop="rate">
           <el-input v-model="form.rate" type="number"></el-input>
         </el-form-item>
         <el-form-item>
