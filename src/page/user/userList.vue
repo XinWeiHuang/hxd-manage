@@ -33,6 +33,19 @@
               <el-form-item label="其他联系人电话">
                 <span>{{ props.row.otherPhone }}</span>
               </el-form-item>
+              <el-form-item label="身份证正面">
+                <span>
+                  <img width="200" height="100" :src="props.row.frontImageUrl" alt="">
+                </span>
+              </el-form-item>
+              <el-form-item label="身份证反面">
+                  <img width="200" height="100" :src="props.row.oppositeImageUrl" alt="">
+                </span>
+              </el-form-item>
+              <el-form-item label="手持身份证">
+                  <img width="200" height="100" :src="props.row.holdCardImageUrl" alt="">
+                </span>
+              </el-form-item>
             </el-form>
           </template>
         </el-table-column>
@@ -149,10 +162,10 @@ export default {
               id: item.id,
               idcard: item.idcard,
               bankCardNum: item.bankCardNum,
-              money:item.money
+              money: item.money
             };
-            const money = item.money ?item.money:0
-            tableItem.money =money
+            const money = item.money ? item.money : 0;
+            tableItem.money = money;
             if (item.userWorkInfo) {
               tableItem.companyName = item.userWorkInfo.companyName;
               tableItem.companyAddress = item.userWorkInfo.companyAddress;
@@ -169,6 +182,11 @@ export default {
             }
             if (item.userBankCard) {
               tableItem.openBank = item.userBankCard.openBank;
+            }
+            if (item.idCardInfo) {
+              tableItem.frontImageUrl = item.idCardInfo.frontImageUrl;
+              tableItem.oppositeImageUrl = item.idCardInfo.oppositeImageUrl;
+              tableItem.holdCardImageUrl = item.idCardInfo.holdCardImageUrl;
             }
             this.data.push(tableItem);
           });
@@ -280,7 +298,7 @@ export default {
               createTime: item.createTime,
               drawMoney: item.drawMoney
             };
-            this.drawData.push(tableItem)
+            this.drawData.push(tableItem);
           });
         } else {
           throw new Error("获取数据失败");
