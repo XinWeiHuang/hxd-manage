@@ -42,10 +42,12 @@
                 </span>
               </el-form-item>
               <el-form-item label="身份证反面">
+                <span>
                   <img v-image-preview width="200" height="100" :src="props.row.oppositeImageUrl" alt="">
                 </span>
               </el-form-item>
               <el-form-item label="手持身份证">
+                <span>
                   <img v-image-preview width="200" height="100" :src="props.row.holdCardImageUrl" alt="">
                 </span>
               </el-form-item>

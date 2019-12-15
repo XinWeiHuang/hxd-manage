@@ -4,10 +4,11 @@
         <el-button type="primary" stlye="margin-left: 20px" @click="add">新增状态</el-button>
         <div class="table_container">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="lable" label="状态"></el-table-column>
-                <el-table-column prop="value" label="KEY"></el-table-column>
-                <el-table-column prop="sortIndex" label="排序"></el-table-column>
-                <el-table-column prop="createTime" label="添加日期"></el-table-column>
+                <el-table-column prop="lable" label="状态" width="150"></el-table-column>
+                <el-table-column prop="value" label="KEY" width="80"></el-table-column>
+                <el-table-column prop="sortIndex" label="排序" width="80"></el-table-column>
+                <el-table-column prop="tips" label="温馨提示" width="400"></el-table-column>
+                <el-table-column prop="createTime" label="添加日期" width="200"></el-table-column>
                 <el-table-column label="操作" width="160">
                     <template slot-scope="scope" v-if="scope.row.changeable">
                         <el-button size="small" type="danger" @click="handleDelete(scope.row)">删除</el-button>
@@ -22,6 +23,9 @@
                 </el-form-item>
                 <el-form-item label="KEY" prop="value">
                     <el-input v-model="form.value" type="number"></el-input>
+                </el-form-item>
+                <el-form-item label="温馨提示" prop="tips">
+                    <el-input v-model="form.tips"></el-input>
                 </el-form-item>
                 <el-form-item label="排序" prop="sortIndex">
                     <el-input v-model="form.sortIndex" type="number"></el-input>
@@ -50,7 +54,8 @@
 				form: {
 					findLabelValueDim: null,
 					value: null,
-                    sortIndex: null
+                    sortIndex: null,
+                    tips: null
 				},
 				rules: {
 					month: [
@@ -97,7 +102,8 @@
 				this.form = {
 					label: null,
 					value: null,
-					sortIndex: null
+					sortIndex: null,
+                    tips: null
 				};
 			},
 			//提交添加数据
