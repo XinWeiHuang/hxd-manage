@@ -6,6 +6,9 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
+              <el-form-item label="学历">
+                <span>{{ props.row.education }}</span>
+              </el-form-item>
               <el-form-item label="开户行">
                 <span>{{ props.row.openBank }}</span>
               </el-form-item>
@@ -35,15 +38,15 @@
               </el-form-item>
               <el-form-item label="身份证正面">
                 <span>
-                  <img width="200" height="100" :src="props.row.frontImageUrl" alt="">
+                  <img v-image-preview width="200" height="100" :src="props.row.frontImageUrl" alt="">
                 </span>
               </el-form-item>
               <el-form-item label="身份证反面">
-                  <img width="200" height="100" :src="props.row.oppositeImageUrl" alt="">
+                  <img v-image-preview width="200" height="100" :src="props.row.oppositeImageUrl" alt="">
                 </span>
               </el-form-item>
               <el-form-item label="手持身份证">
-                  <img width="200" height="100" :src="props.row.holdCardImageUrl" alt="">
+                  <img v-image-preview width="200" height="100" :src="props.row.holdCardImageUrl" alt="">
                 </span>
               </el-form-item>
             </el-form>

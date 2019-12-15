@@ -4,6 +4,10 @@ import router from './router'
 import store from './store/'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import VueDirectiveImagePreviewer from 'vue-directive-image-previewer'
+import 'vue-directive-image-previewer/dist/assets/style.css'
+
+Vue.use(VueDirectiveImagePreviewer)
 
 Vue.config.productionTip = false;
 
