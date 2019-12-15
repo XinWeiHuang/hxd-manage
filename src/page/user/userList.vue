@@ -40,8 +40,9 @@
         <el-table-column label="手机号" prop="phone"></el-table-column>
         <el-table-column label="身份证" prop="idcard"></el-table-column>
         <el-table-column label="银行卡" prop="bankCardNum"></el-table-column>
-        <el-table-column label="操作" width="160">
+        <el-table-column label="操作" width="300">
           <template slot-scope="scope">
+            <el-button size="small" @click="handleWallet(scope.$index, scope.row)">钱包</el-button>
             <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -55,12 +56,32 @@
         ></el-pagination>
       </div>
     </div>
+    <el-dialog title="钱包信息" :visible.sync="dialogFormVisible">
+      <el-form :model="form" ref="form" label-width="140px">
+        <el-form-item label="当前余额" prop="money">
+          <el-input v-model="form.newMoney"></el-input>
+        </el-form-item>
+        <el-form-item label="修改余额" prop="newMoney">
+          <el-input v-model="form.money"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button style="float:right;" type="primary" @click="submitForm('form')">修改</el-button>
+          <el-button style="float:right;margin-right:15px" @click="resetForm">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import headTop from "../../components/headTop";
-import { getAdminList, getAdminCount, deleteAdmin } from "@/api/getData";
+import {
+  getAdminList,
+  getAdminCount,
+  deleteAdmin,
+  getUserWallet,
+  saveWallet
+} from "@/api/getData";
 export default {
   data() {
     return {
@@ -74,9 +95,9 @@ export default {
         role: 1
       },
       dialogFormVisible: false,
-      adminForm: {
-        password: "",
-        phone: ""
+      form: {
+        money: 0,
+        newMoney: 0
       }
     };
   },
@@ -144,7 +165,7 @@ export default {
         console.log("获取数据失败", err);
       }
     },
-     //根据id删除
+    //根据id删除
     async handleDelete(index, row) {
       this.$confirm("此操作将删除用户, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -178,7 +199,64 @@ export default {
     handleChange(val) {
       this.page = val;
       this.getAdmin();
+    },
+   async handleWallet(index, row) {
+      try {
+        const param = { userId: row.id };
+        const wallet = await getUserWallet(param);
+        console.log(wallet,'444444444444444')
+        if (wallet.status == 1) {
+          this.form.money = wallet.data.money;
+          this.form.newMoney = wallet.data.money;
+          this.form.id = wallet.data.id;
+          this.form.userId = row.id
+          this.dialogFormVisible = true;
+        } else {
+          throw new Error("获取数据失败");
+        }
+      } catch (err) {
+        console.log("获取数据失败", err);
+      }
+    },
+    resetForm(){
+      this.form.id = null
+      this.form.money = 0
+      this.form.newMoney = 0
+      this.form.userId = null
+      this.dialogFormVisible = false
     }
+    ,
+    submitForm(form) {
+      this.$refs[form].validate(async valid => {
+        if (valid) {
+          let result = await saveWallet(this.form);
+          if (result.status == 1) {
+            this.$message({
+              type: "success",
+              message: "修改成功"
+            });
+            this.initData();
+            this.dialogFormVisible = false;
+            this.adminForm = {
+              password: "",
+              phone: ""
+            };
+          } else {
+            this.$message({
+              type: "error",
+              message: result.message
+            });
+          }
+        } else {
+          this.$notify.error({
+            title: "错误",
+            message: "请检查输入是否正确",
+            offset: 100
+          });
+          return false;
+        }
+      });
+    },
   }
 };
 </script>

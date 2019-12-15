@@ -331,4 +331,8 @@ export const deleteLoanRate = date => fetch('/loanRate/delete/'+ date, {}, 'DELE
  */
 export const saveLoanRate = data => fetch('/loanRate/save', data, 'POST');
 
+export const getUserWallet = data => fetch('/wallet/findByUserId', data);
+
+export const saveWallet = data => fetch('/wallet/save', data, 'POST');
+
 
