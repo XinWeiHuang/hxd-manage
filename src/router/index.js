@@ -10,7 +10,7 @@ const loanLists = r => require.ensure([], () => r(require('@/page/loan/loanLists
 const loanStatusList = r => require.ensure([], () => r(require('@/page/loanStatus/loanStatusList')), 'loanStatusList');
 const userList = r => require.ensure([], () => r(require('@/page/user/userList')), 'userList');
 const adminList = r => require.ensure([], () => r(require('@/page/admin/adminList')), 'adminList');
-const loanrateList = r => require.ensure([], () => r(require('@/page/loanrate/loanrateList')), 'loanrateList');
+const systemConfig = r => require.ensure([], () => r(require('@/page/systemConfig/systemConfig')), 'systemConfig');
 
 const routes = [
 	{ path: '/', component: login },
@@ -22,7 +22,7 @@ const routes = [
 		    { path: '', component: home, meta: []},
             { path: '/loanStatusList', component: loanStatusList, meta: ['数据管理', '利率表状态管理']},
             { path: '/userList', component: userList, meta: ['数据管理', '用户列表'] },
-            { path: '/loanrateList', component: loanrateList, meta: ['数据管理', '利率管理'] },
+            { path: '/systemConfig', component: systemConfig, meta: ['数据管理', '贷款配置'] },
             { path: '/loanLists', component: loanLists, meta: ['数据管理', '订单列表'] },
             { path: '/adminList', component: adminList, meta: ['数据管理', '管理员列表'] }
         ]

@@ -83,29 +83,6 @@ export const deleteAdmin = date => fetch('/admin/delete/'+ date, {}, 'DELETE');
 export const addAdmin = data => fetch('/admin/add', data, 'POST');
 
 /**
- * 查询月利率
- */
-
-export const getLoanRateList = data => fetch('/loanRate/find',data);
-
-/**
- * 查询月利率数量
- */
-export const getLoanRateCount = () => fetch('/loanRate/count');
-
-/**
- * 删除月利率
- * @param {id} date
- */
-export const deleteLoanRate = date => fetch('/loanRate/delete/'+ date, {}, 'DELETE');
-
-/**
- * 增加月利率
- * @param {*} data
- */
-export const saveLoanRate = data => fetch('/loanRate/save', data, 'POST');
-
-/**
  * 获取用户钱包
  * @param {*} data
  */
@@ -122,3 +99,15 @@ export const saveWallet = data => fetch('/wallet/save', data, 'POST');
  * @param {*} data
  */
 export const getUserWalletDraw = data => fetch('/walletDraw/findByUserId', data);
+
+/**
+ * 查询贷款配置
+ */
+
+export const getSystemConfig = data => fetch('/system/find',data);
+
+/**
+ * 保存贷款配置
+ * @param {*} data
+ */
+export const saveSystemConfig = data => fetch('/system/save', data, 'POST');

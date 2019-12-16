@@ -9,7 +9,7 @@
                         <el-menu-item index="adminList">管理员列表</el-menu-item>
 						<el-menu-item index="userList">用户列表</el-menu-item>
                         <el-menu-item index="loanLists">订单列表</el-menu-item>
-						<el-menu-item index="loanrateList">利率列表</el-menu-item>
+						<el-menu-item index="systemConfig">贷款配置</el-menu-item>
                         <el-menu-item index="loanStatusList">订单状态配置</el-menu-item>
 					</el-submenu>
 				</el-menu>
