@@ -26,7 +26,7 @@
             <el-input v-model="form.refundDay"></el-input>
           </el-form-item>
           <el-form-item class="button_submit">
-            <el-button type="primary" style="margin-left:20px" @click="submitForm('form')">保存</el-button>
+            <el-button type="primary" style="float:left;" @click="submitForm('form')">保存</el-button>
           </el-form-item>
         </el-form>
       </el-col>
