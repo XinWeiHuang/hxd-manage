@@ -4,10 +4,10 @@
         <el-button type="primary" stlye="margin-left: 20px" @click="add">新增类目</el-button>
         <div class="table_container">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="itemKey" label="类目KEY" width="80"></el-table-column>
-                <el-table-column prop="itemValue" label="类目名称" width="150"></el-table-column>
-                <el-table-column prop="createTime" label="创建时间" width="150"></el-table-column>
-                <el-table-column prop="updateTime" label="更新时间" width="150"></el-table-column>
+                <el-table-column prop="itemKey" label="类目KEY"></el-table-column>
+                <el-table-column prop="itemValue" label="类目名称"></el-table-column>
+                <el-table-column prop="createTime" label="创建时间"></el-table-column>
+                <el-table-column prop="updateTime" label="更新时间"></el-table-column>
                 <el-table-column label="操作" width="160">
                     <template slot-scope="scope">
                         <el-button size="small" type="danger" @click="handleDelete(scope.row)">删除</el-button>
@@ -91,7 +91,7 @@
 			async getArticleItems() {
 				try {
 					const itemCount = await getItemCount();
-					if (loanCount.status == 1) {
+					if (itemCount.status == 1) {
 						this.count = itemCount.data;
 					}else{
 						throw new Error('获取数据失败');
@@ -108,9 +108,9 @@
 			},
 			add() {
 				this.dialogFormVisible = true;
+				this.resetForm()
 			},
 			async resetForm() {
-				this.dialogFormVisible = false;
 				this.form = {
 					itemKey: null,
 					itemValue: null

@@ -317,7 +317,6 @@
 				}
 			},
 			async updateLoanStatus(){
-				this.dialogFormVisible = false;
 				try{
 					this.editParam.status = this.selectValue
 					const res = await updateLoanStatus(this.editParam)
@@ -326,6 +325,7 @@
 							type: 'success',
 							message: '更新状态成功'
 						});
+						this.dialogFormVisible = false;
 						this.getLoanLists();
 					}else{
 						this.$message({

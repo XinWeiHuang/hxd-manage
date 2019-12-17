@@ -164,7 +164,7 @@ export const getArticles = data => fetch('/article/', data, "GET");
  *查询推文
  * @param data
  */
-export const getArticleCount = data => fetch('/article/', data, "GET");
+export const getArticleCount = data => fetch('/article/count', data, "GET");
 
 /**
  * 查询网站信息配置

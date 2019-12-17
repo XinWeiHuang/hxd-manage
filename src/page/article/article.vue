@@ -32,12 +32,10 @@
                 </el-table-column>
                 <el-table-column
                     label="类目"
-                    width="70"
                     prop="itemName">
                 </el-table-column>
                 <el-table-column
                     label="标题"
-                    width="70"
                     prop="title">
                 </el-table-column>
                 <el-table-column
@@ -46,14 +44,13 @@
                 </el-table-column>
                 <el-table-column
                     label="创建时间"
-                    width="200"
                     prop="createTime">
+                </el-table-column>
                 <el-table-column
                     label="更新时间"
-                    width="200"
                     prop="updateTime">
                 </el-table-column>
-                <el-table-column label="操作" width="250">
+                <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button
                             size="small"
@@ -77,25 +74,32 @@
                 </el-pagination>
             </div>
 
-            <el-dialog title="发布推文" v-model="dialogFormVisible">
+            <el-dialog title="推文" v-model="dialogFormVisible">
                 <el-form :model="articleForm">
-                    <el-form-item label="订单状态" label-width="100px">
-                        <el-select v-model="selectValue" :placeholder="selectMenu.label" @change="handleSelect">
-                            <el-option
-                                v-for="item in loanStatusOps"
-                                :key="item.index"
-                                :label="item.label"
-                                :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="备注" label-width="100px">
-                        <el-input type="textarea" autosize v-model="editParam.remark" width="180"/>
-                    </el-form-item>
+                    <el-row>
+                        <el-form-item label="标题" label-width="100px">
+                            <el-input type="text" v-model="articleForm.title" width="180"/>
+                        </el-form-item>
+                        <el-form-item label="类目" label-width="100px">
+                            <el-select v-model="articleForm.item" :placeholder="selectMenu.label" @change="handleSelect">
+                                <el-option
+                                    v-for="item in itemOps"
+                                    :key="item.index"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-row>
+                    <el-row>
+                        <el-form-item label="内容" label-width="100px">
+                            <el-input type="textarea" autosize v-model="articleForm.content" width="180"/>
+                        </el-form-item>
+                    </el-row>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="updateArticle">确 定</el-button>
+                    <el-button type="primary" @click="submitArticleForm">确 定</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -104,7 +108,7 @@
 
 <script>
 	import headTop from '@/components/headTop'
-	import {getArticleCount, getArticleItemOps, updateArticle, deleteArticle} from '@/api/getData'
+	import {getArticleCount, getArticleItemOps, updateArticle, deleteArticle, getArticles, addArticle} from '@/api/getData'
 	export default {
 		data(){
 			return {
@@ -156,13 +160,19 @@
 				}else{
 					throw new Error('获取数据失败');
 				}
-				//TODO  分页查询
-				const loanLists = await getLoanList({page: this.currentPage, size: this.size});
+				//TODO  条件查询
+				const loanLists = await getArticles({page: this.currentPage, size: this.size});
 				this.tableData = loanLists.data;
 
 			},
 			openDialog() {
 				this.dialogFormVisible = true;
+				this.articleForm = {
+					id: null,
+					title: null,
+					item: null,
+					content: null
+                }
             },
 
 			tableRowClassName(row, index) {
@@ -202,7 +212,7 @@
 			},
 
 			handleSelect(value){
-				this.selectValue = value;
+				this.articleForm.item = value;
 			},
 
             handleDelete(row) {
@@ -240,7 +250,6 @@
 				}
             },
 			async submitArticleForm(){
-				this.dialogFormVisible = false;
 				try{
 					var res ;
 					if (this.currentOpe == 'add') {
@@ -253,6 +262,7 @@
 							type: 'success',
 							message: '操作成功'
 						});
+						this.dialogFormVisible = false;
 						this.getArticles();
 					}else{
 						this.$message({
