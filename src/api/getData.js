@@ -111,3 +111,48 @@ export const getSystemConfig = data => fetch('/system/find',data);
  * @param {*} data
  */
 export const saveSystemConfig = data => fetch('/system/save', data, 'POST');
+/*===========================推文类目=======================================*/
+/**
+ * 新增文章类目
+ * @param data
+ */
+export const addArticleItem = data => fetch('/articleItem', data, 'POST');
+/**
+ *删除文章类目
+ */
+export const deleteArticleItem = id => fetch('/articleItem/' + id, {}, 'DELETE');
+/**
+ *修改文章类目
+ * @param data
+ */
+export const updateArticleItem = data => fetch('/articleItem/' + data.id, data, 'PUT');
+/**
+ * 查询文章类目
+ * @param data
+ */
+export const getArticleItems = data => fetch('/articleItem/', data, 'GET');
+/**
+ * 获取文章类目下拉框
+ */
+export const getArticleItemOps = () => fetch('/articleItem/getDropDown');
+/*===========================推文接口===================================*/
+/**
+ *新增推文
+ * @param data
+ */
+export const addArticle = data => fetch('/article/', data, "POST");
+/**
+ * 删除推文
+ * @param id
+ */
+export const deleteArticle = id => fetch('/article/'+id, {}, "DELETE");
+/**
+ *修改推文
+ * @param data
+ */
+export const updateArticle = data => fetch('/article/'+data.id, data, "PUT");
+/**
+ *查询推文
+ * @param data
+ */
+export const getArticles = data => fetch('/article/', data, "GET");

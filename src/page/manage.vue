@@ -11,6 +11,8 @@
                         <el-menu-item index="loanLists">订单列表</el-menu-item>
 						<el-menu-item index="systemConfig">贷款配置</el-menu-item>
                         <el-menu-item index="loanStatusList">订单状态配置</el-menu-item>
+                        <el-menu-item index="articleItem">推文类目</el-menu-item>
+                        <el-menu-item index="article">推文管理</el-menu-item>
 					</el-submenu>
 				</el-menu>
 			</el-col>
