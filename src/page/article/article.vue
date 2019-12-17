@@ -1,6 +1,7 @@
 <template>
     <div class="fillcontain">
         <head-top></head-top>
+        <el-button type="primary" stlye="margin-left: 20px" @click="add">发布推文</el-button>
         <div class="table_container">
             <el-table
                 :data="tableData"
@@ -11,71 +12,42 @@
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="订单号">
-                                <span>{{ props.row.id }}</span>
+                            <el-form-item label="标题">
+                                <span>{{ props.row.title }}</span>
                             </el-form-item>
-                            <el-form-item label="贷款人">
-                                <span>{{ props.row.userName }}</span>
+                            <el-form-item label="类目">
+                                <span>{{ props.row.itemName }}</span>
                             </el-form-item>
-                            <el-form-item label="贷款人电话">
-                                <span>{{ props.row.phone }}</span>
+                            <el-form-item label="内容">
+                                <span>{{ props.row.content }}</span>
                             </el-form-item>
-                            <el-form-item label="贷款金额">
-                                <span>{{ props.row.money }}</span>
-                            </el-form-item>
-                            <el-form-item label="收款账户">
-                                <span>{{ props.row.receiveAccount }}</span>
-                            </el-form-item>
-                            <el-form-item label="每月还款">
-                                <span>{{ props.row.termMoney }}</span>
-                            </el-form-item>
-                            <el-form-item label="还款月数">
-                                <span>{{ props.row.monthNum }}</span>
-                            </el-form-item>
-                            <el-form-item label="月利率(%)">
-                                <span>{{ props.row.percentMonthRate }}</span>
-                            </el-form-item>
-                            <el-form-item label="申请时间">
+                            <el-form-item label="创建时间">
                                 <span>{{ props.row.createTime }}</span>
                             </el-form-item>
-                            <el-form-item label="状态">
-                                <span>{{ props.row.statusName }}</span>
+                            <el-form-item label="修改时间">
+                                <span>{{ props.row.updateTime }}</span>
                             </el-form-item>
                         </el-form>
                     </template>
                 </el-table-column>
                 <el-table-column
-                    label="订单Id"
+                    label="类目"
                     width="70"
-                    prop="id">
+                    prop="itemName">
                 </el-table-column>
                 <el-table-column
-                    label="贷款人"
-                    prop="userName">
+                    label="标题"
+                    width="70"
+                    prop="title">
                 </el-table-column>
                 <el-table-column
-                    label="贷款人电话"
-                    width="130"
-                    prop="phone">
+                    label="内容"
+                    prop="content">
                 </el-table-column>
                 <el-table-column
-                    label="贷款金额(元)"
-                    width="100"
-                    prop="money">
-                </el-table-column>
-                <el-table-column
-                    label="还款金额(元)"
-                    prop="termMoney">
-                </el-table-column>
-                <el-table-column
-                    label="还款月数"
-                    prop="monthNum">
-                </el-table-column>
-                <el-table-column
-                    label="状态"
-                    width="100"
-                    prop="statusName">
-                </el-table-column>
+                    label="创建时间"
+                    width="200"
+                    prop="createTime">
                 <el-table-column
                     label="更新时间"
                     width="200"
@@ -86,9 +58,6 @@
                         <el-button
                             size="small"
                             @click="handleEdit(scope.row)">编辑</el-button>
-                        <el-button
-                            size="small"
-                            @click="handleSeeLogs(scope.row)">查看日志</el-button>
                         <el-button
                             size="small"
                             type="danger"
@@ -108,8 +77,8 @@
                 </el-pagination>
             </div>
 
-            <el-dialog title="修改贷款状态" v-model="dialogFormVisible">
-                <el-form :model="editParam">
+            <el-dialog title="发布推文" v-model="dialogFormVisible">
+                <el-form :model="articleForm">
                     <el-form-item label="订单状态" label-width="100px">
                         <el-select v-model="selectValue" :placeholder="selectMenu.label" @change="handleSelect">
                             <el-option
@@ -126,33 +95,8 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="updateLoanStatus">确 定</el-button>
+                    <el-button type="primary" @click="updateArticle">确 定</el-button>
                 </div>
-            </el-dialog>
-
-            <el-dialog title="操作日志" v-model="dialogOperLogsVisible">
-                <el-table
-                    :data="logsDataTable"
-                    :row-key="row => row.index"
-                    style="width: 100%">
-                    <el-table-column
-                        label="修改人"
-                        prop="userName">
-                    </el-table-column>
-                    <el-table-column
-                        label="修改前状态"
-                        prop="preStatusName">
-                    </el-table-column>
-                    <el-table-column
-                        label="修改后状态"
-                        prop="curStatusName">
-                    </el-table-column>
-                    <el-table-column
-                        label="操作时间"
-                        width="200"
-                        prop="createTime">
-                    </el-table-column>
-                </el-table>
             </el-dialog>
         </div>
     </div>
@@ -160,32 +104,33 @@
 
 <script>
 	import headTop from '@/components/headTop'
-	import {getLoanCount, getLoanList, getLoanStatusOps, updateLoanStatus, getOperLogs, deleteLoan} from '@/api/getData'
+	import {getArticleCount, getArticleItemOps, getLoanStatusOps, updateArticle, getOperLogs, deleteArticle} from '@/api/getData'
 	export default {
 		data(){
 			return {
 				orderId: null,
+				currentPage: 1,
 				size: 10,
 				count: 0,
 				tableData: [],
-                logsDataTable: [],
-				currentPage: 1,
 				selectTable: {},
 				dialogFormVisible: false,
-                dialogOperLogsVisible: false,
-				loanStatusOps: [],
+				itemOps: [],
 				selectMenu: {vaule:'',label: '请选择'},
 				selectValue: null,
 				expendRow: [],
-                editParam : {
-                    orderId:'',
-                    status:'',
-                    remark:''
+                currentOpe: '',
+				articleForm: {
+					id: null,
+                    title: null,
+                    item: null,
+                    content: null
                 }
 			}
 		},
 		created(){
 			this.initData();
+			this.initItemOps();
 		},
 		computed: {
 		},
@@ -193,23 +138,33 @@
 			headTop,
 		},
 		methods: {
+			async initItemOps() {
+				const itemOps = await getArticleItemOps({page: this.currentPage, size: this.size});
+                this.itemOps = itemOps;
+            },
 			async initData(){
 				try{
-					this.getLoanLists();
+					this.getArticles();
 				}catch(err){
 					console.log('获取数据失败', err);
 				}
 			},
-			async getLoanLists() {
-				const loanCount = await getLoanCount({});
-				if (loanCount.status == 1) {
-					this.count = loanCount.data;
+			async getArticles() {
+				const count = await getArticleCount({});
+				if (count.status == 1) {
+					this.count = count.data;
 				}else{
 					throw new Error('获取数据失败');
 				}
+				//TODO  分页查询
 				const loanLists = await getLoanList({page: this.currentPage, size: this.size});
 				this.tableData = loanLists.data;
+
 			},
+			openDialog() {
+				this.dialogFormVisible = true;
+            },
+
 			tableRowClassName(row, index) {
 				if (index === 1) {
 					return 'info-row';
@@ -225,7 +180,7 @@
 
 			handleCurrentChange(val) {
 				this.currentPage = val;
-				this.getLoanLists()
+				this.getArticles()
 			},
 
 			expand(row, status){
@@ -236,36 +191,20 @@
 					this.expendRow.splice(index, 1)
 				}
 			},
-
+            add () {
+				this.openDialog();
+                this.currentOpe = "add";
+            },
 			handleEdit(row) {
-				this.getLoanStatusOps(row);
-				this.createFormData(row, 'edit')
-				this.dialogFormVisible = true;
+				this.openDialog();
+				this.currentOpe = "add";
+				this.articleForm = row
 			},
-			createFormData(row, type){
-				this.selectTable = row
-                this.editParam.orderId = row.id
-				this.selectValue = row.status
-                this.editParam.remark = ''
-			},
-			async getLoanStatusOps(row) {
-				var ops = await getLoanStatusOps()
-				var exits = false;
-				ops.forEach(item=>{
-				    debugger;
-					if (item.value == row.status) {
-                        exits = true
-						return
-					}
-				});
-                if (!exits) {
-					ops.push({label: row.statusName, value:  row.status, index: row.status})
-                }
-				this.loanStatusOps = ops
-			},
+
 			handleSelect(value){
 				this.selectValue = value;
 			},
+
             handleDelete(row) {
 				var _this = this
 				try{
@@ -286,13 +225,13 @@
 				}
             },
             async doDelete(row) {
-				const res = await deleteLoan(row.id)
+				const res = await deleteArticle(row.id)
 				if (res.status == 1) {
 					this.$message({
 						type: 'success',
 						message: '删除成功'
 					});
-					this.getLoanLists();
+					this.getArticles();
 				} else {
 					this.$message({
 						type: 'error',
@@ -300,33 +239,21 @@
 					});
 				}
             },
-			async handleSeeLogs(row) {
-				try{
-					const res = await getOperLogs(row.id);
-					if (res.status == 1) {
-						this.dialogOperLogsVisible = true
-                        this.logsDataTable = res.data
-					}else{
-						throw new Error(res.message)
-					}
-				}catch(err){
-					this.$message({
-						type: 'error',
-						message: err.message
-					});
-				}
-			},
-			async updateLoanStatus(){
+			async submitArticleForm(){
 				this.dialogFormVisible = false;
 				try{
-					this.editParam.status = this.selectValue
-					const res = await updateLoanStatus(this.editParam)
+					var res ;
+					if (this.currentOpe == 'add') {
+						res = await addArticle(this.articleForm);
+                    } else {
+						res = await updateArticle(this.articleForm)
+                    }
 					if (res.status == 1) {
 						this.$message({
 							type: 'success',
-							message: '更新状态成功'
+							message: '操作成功'
 						});
-						this.getLoanLists();
+						this.getArticles();
 					}else{
 						this.$message({
 							type: 'error',

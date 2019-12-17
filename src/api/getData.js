@@ -135,6 +135,10 @@ export const getArticleItems = data => fetch('/articleItem/', data, 'GET');
  * 获取文章类目下拉框
  */
 export const getArticleItemOps = () => fetch('/articleItem/getDropDown');
+/**
+ * 获取类目数量
+ */
+export const getItemCount = () => fetch('/articleItem/count');
 /*===========================推文接口===================================*/
 /**
  *新增推文
@@ -156,3 +160,7 @@ export const updateArticle = data => fetch('/article/'+data.id, data, "PUT");
  * @param data
  */
 export const getArticles = data => fetch('/article/', data, "GET");
+/**
+ * 获取推文数量
+ */
+export const getArticleCount = data => fetch('/article/count', data);
