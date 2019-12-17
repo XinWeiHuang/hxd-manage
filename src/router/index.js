@@ -13,6 +13,7 @@ const adminList = r => require.ensure([], () => r(require('@/page/admin/adminLis
 const systemConfig = r => require.ensure([], () => r(require('@/page/systemConfig/systemConfig')), 'systemConfig');
 const articleItems = r => require.ensure([], () => r(require('@/page/articleItem/articleItem')), 'systemConfig');
 const articles = r => require.ensure([], () => r(require('@/page/article/article')), 'systemConfig');
+const webInfo = r => require.ensure([], () => r(require('@/page/webInfo/webInfo')), 'webInfo');
 
 const routes = [
 	{ path: '/', component: login },
@@ -28,7 +29,8 @@ const routes = [
             { path: '/loanLists', component: loanLists, meta: ['数据管理', '订单列表'] },
             { path: '/adminList', component: adminList, meta: ['数据管理', '管理员列表'] },
             { path: '/articleItem', component: articleItems, meta: ['数据管理', '推文类目'] },
-            { path: '/article', component: articles, meta: ['数据管理', '推文管理'] },
+			{ path: '/article', component: articles, meta: ['数据管理', '推文管理'] },
+			{ path: '/webInfo', component: webInfo, meta: ['数据管理', '网站信息配置'] },
         ]
 	}
 ]

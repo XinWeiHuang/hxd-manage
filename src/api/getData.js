@@ -156,3 +156,15 @@ export const updateArticle = data => fetch('/article/'+data.id, data, "PUT");
  * @param data
  */
 export const getArticles = data => fetch('/article/', data, "GET");
+
+/**
+ * 查询网站信息配置
+ */
+
+export const getWebInfo = data => fetch('/webInfo/find',data);
+
+/**
+ * 保存网站信息配置
+ * @param {*} data
+ */
+export const saveWebInfo = data => fetch('/webInfo/save', data, 'POST');
