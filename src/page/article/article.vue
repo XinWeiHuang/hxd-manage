@@ -104,7 +104,7 @@
 
 <script>
 	import headTop from '@/components/headTop'
-	import {getArticleCount, getArticleItemOps, getLoanStatusOps, updateArticle, getOperLogs, deleteArticle} from '@/api/getData'
+	import {getArticleCount, getArticleItemOps, updateArticle, deleteArticle} from '@/api/getData'
 	export default {
 		data(){
 			return {

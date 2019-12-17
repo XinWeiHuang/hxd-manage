@@ -136,9 +136,9 @@ export const getArticleItems = data => fetch('/articleItem/', data, 'GET');
  */
 export const getArticleItemOps = () => fetch('/articleItem/getDropDown');
 /**
- * 获取类目数量
+ * 获取文章类目数量
  */
-export const getItemCount = () => fetch('/articleItem/count');
+export const getItemCount = data => fetch('/articleItem/count', data);
 /*===========================推文接口===================================*/
 /**
  *新增推文
@@ -161,6 +161,19 @@ export const updateArticle = data => fetch('/article/'+data.id, data, "PUT");
  */
 export const getArticles = data => fetch('/article/', data, "GET");
 /**
- * 获取推文数量
+ *查询推文
+ * @param data
  */
-export const getArticleCount = data => fetch('/article/count', data);
+export const getArticleCount = data => fetch('/article/', data, "GET");
+
+/**
+ * 查询网站信息配置
+ */
+
+export const getWebInfo = data => fetch('/webInfo/find',data);
+
+/**
+ * 保存网站信息配置
+ * @param {*} data
+ */
+export const saveWebInfo = data => fetch('/webInfo/save', data, 'POST');
