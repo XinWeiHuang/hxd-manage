@@ -167,7 +167,8 @@ export default {
               id: item.id,
               idcard: item.idcard,
               bankCardNum: item.bankCardNum,
-              money: item.money
+              money: item.money,
+			  education: item.education
             };
             const money = item.money ? item.money : 0;
             tableItem.money = money;

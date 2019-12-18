@@ -36,7 +36,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button style="float:right;" type="primary" @click="submitForm('form')">确定</el-button>
-                    <el-button style="float:right;margin-right:15px" @click="resetForm">取消</el-button>
+                    <el-button style="float:right;margin-right:15px" @click="dialogFormVisible = false">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>

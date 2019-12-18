@@ -85,7 +85,7 @@
                     <template slot-scope="scope">
                         <el-button
                             size="small"
-                            @click="handleEdit(scope.row)">编辑</el-button>
+                            @click="handleEdit(scope.row)">审核</el-button>
                         <el-button
                             size="small"
                             @click="handleSeeLogs(scope.row)">查看日志</el-button>
