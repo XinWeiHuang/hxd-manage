@@ -125,7 +125,7 @@ export const deleteArticleItem = id => fetch('/articleItem/' + id, {}, 'DELETE')
  *修改文章类目
  * @param data
  */
-export const updateArticleItem = data => fetch('/articleItem/' + data.id, data, 'PUT');
+//export const updateArticleItem = data => fetch('/articleItem/' + data.id, data, 'PUT');
 /**
  * 查询文章类目
  * @param data
@@ -154,7 +154,7 @@ export const deleteArticle = id => fetch('/article/'+id, {}, "DELETE");
  *修改推文
  * @param data
  */
-export const updateArticle = data => fetch('/article/'+data.id, data, "PUT");
+export const updateArticle = data => fetch('/article/'+data.id, data, "POST");
 /**
  *查询推文
  * @param data

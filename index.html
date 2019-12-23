@@ -3,8 +3,20 @@
   <head>
     <meta charset="utf-8">
     <title>好兄弟贷款管理台</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="static/config.js"></script>
   </head>
   <body>
     <div id="app"></div>
   </body>
+  <script>
+	  // import { getRequestUrl } from '@/util/utils.js'
+	  // getInfo
+      debugger
+	  axios.get(pro_location + '/webInfo/find').then(res=> {
+	  	debugger
+		  var data = res.data.data;
+		  document.title = data.webName || '';
+	  })
+  </script>
 </html>

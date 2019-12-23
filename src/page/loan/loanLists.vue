@@ -85,7 +85,7 @@
                     <template slot-scope="scope">
                         <el-button
                             size="small"
-                            @click="handleEdit(scope.row)">审核</el-button>
+                            @click="handleEdit(scope.row)">修改进度</el-button>
                         <el-button
                             size="small"
                             @click="handleSeeLogs(scope.row)">查看日志</el-button>
@@ -323,7 +323,7 @@
 					if (res.status == 1) {
 						this.$message({
 							type: 'success',
-							message: '更新状态成功'
+							message: '操作成功'
 						});
 						this.dialogFormVisible = false;
 						this.getLoanLists();
@@ -334,7 +334,7 @@
 						});
 					}
                 } catch (err){
-					console.log('更新状态失败', err);
+					console.log('操作失败', err);
 				}
 			},
 		},

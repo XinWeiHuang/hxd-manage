@@ -32,25 +32,30 @@
                 </el-table-column>
                 <el-table-column
                     label="类目"
+                    width="120"
                     prop="itemName">
                 </el-table-column>
                 <el-table-column
                     label="标题"
+                    width="120"
                     prop="title">
                 </el-table-column>
                 <el-table-column
                     label="内容"
-                    prop="content">
+                    width="220"
+                    prop="shortContent">
                 </el-table-column>
                 <el-table-column
                     label="创建时间"
+                    width="200"
                     prop="createTime">
                 </el-table-column>
                 <el-table-column
                     label="更新时间"
+                    width="200"
                     prop="updateTime">
                 </el-table-column>
-                <el-table-column label="操作">
+                <el-table-column label="操作"  width="160">
                     <template slot-scope="scope">
                         <el-button
                             size="small"
@@ -207,7 +212,7 @@
             },
 			handleEdit(row) {
 				this.openDialog();
-				this.currentOpe = "add";
+				this.currentOpe = "edit";
 				this.articleForm = row
 			},
 
@@ -251,6 +256,7 @@
             },
 			async submitArticleForm(){
 				try{
+					debugger
 					var res ;
 					if (this.currentOpe == 'add') {
 						res = await addArticle(this.articleForm);

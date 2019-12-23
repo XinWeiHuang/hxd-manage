@@ -1,3 +1,4 @@
+import config from '../../static/config'
 /**
  * 配置编译环境和线上环境之间的切换
  *
@@ -11,10 +12,10 @@ let routerMode = 'hash';
 let baseImgPath;
 
 if (process.env.NODE_ENV == 'development') {
-	baseUrl = 'http://127.0.0.1:8080';
+	baseUrl = dev_location;
     baseImgPath = '/img';
 } else {
-	baseUrl = 'http://47.106.228.71:8080';
+	baseUrl = pro_location;
     baseImgPath = '//elm.cangdu.org/img';
 }
 
