@@ -177,3 +177,9 @@ export const getWebInfo = data => fetch('/webInfo/find',data);
  * @param {*} data
  */
 export const saveWebInfo = data => fetch('/webInfo/save', data, 'POST');
+
+/**
+ * 保存网站信息配置
+ * @param {*} data
+ */
+export const resetPassword = data => fetch('/user/resetPassword', data, 'POST');

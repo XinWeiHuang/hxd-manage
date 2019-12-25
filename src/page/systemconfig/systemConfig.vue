@@ -25,6 +25,9 @@
           <el-form-item label="每月还款日" prop="refundDay">
             <el-input v-model="form.refundDay"></el-input>
           </el-form-item>
+           <el-form-item label="最小精度" prop="accuracy">
+            <el-input v-model="form.accuracy"></el-input>
+          </el-form-item>
           <el-form-item class="button_submit">
             <el-button type="primary" style="float:left;" @click="submitForm('form')">保存</el-button>
           </el-form-item>
@@ -47,7 +50,8 @@ export default {
         availableMonths: "",
         defaultMonth: 0,
         loanRate: 0,
-        refundDay: 1
+        refundDay: 1,
+        accuracy: 1000
       },
       rules: {
         month: [
@@ -79,6 +83,7 @@ export default {
           this.form.defaultMonth = systemConfig.data.defaultMonth;
           this.form.loanRate = systemConfig.data.loanRate;
           this.form.refundDay = systemConfig.data.refundDay;
+          this.form.accuracy = systemConfig.data.accuracy;
         } else {
           throw new Error("获取数据失败");
         }

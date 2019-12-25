@@ -59,8 +59,9 @@
         <el-table-column label="身份证" prop="idcard" width="200"></el-table-column>
         <el-table-column label="银行卡" prop="bankCardNum" width="200"></el-table-column>
         <el-table-column label="余额" prop="money"></el-table-column>
-        <el-table-column label="操作" width="300">
+        <el-table-column label="操作" width="340">
           <template slot-scope="scope">
+            <el-button size="small" @click="handlePassword(scope.$index, scope.row)">重置密码</el-button>
             <el-button size="small" @click="handleWallet(scope.$index, scope.row)">修改钱包</el-button>
             <el-button size="small" @click="handleWalletDraw(scope.$index, scope.row)">提现记录</el-button>
             <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -96,6 +97,20 @@
         <el-table-column label="提现时间" prop="createTime"></el-table-column>
       </el-table>
     </el-dialog>
+        <el-dialog title="重置密码" :visible.sync="dialogPsswordFormVisible">
+      <el-form :model="passwordForm" ref="passwordForm" label-width="140px">
+        <el-form-item label="新密码" prop="password">
+          <el-input v-model.trim="passwordForm.password"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="confirmPassword">
+          <el-input v-model.trim="passwordForm.confirmPassword"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button style="float:right;" type="primary" @click="submitPasswordForm('passwordForm')">重置</el-button>
+          <el-button style="float:right;margin-right:15px" @click="resetPasswordForm">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -107,7 +122,8 @@ import {
   deleteAdmin,
   getUserWallet,
   saveWallet,
-  getUserWalletDraw
+  getUserWalletDraw,
+  resetPassword
 } from "@/api/getData";
 export default {
   data() {
@@ -127,7 +143,12 @@ export default {
         newMoney: 0
       },
       walletDrawVisible: false,
-      drawData: []
+      drawData: [],
+      dialogPsswordFormVisible: false,
+      passwordForm: {
+        password: '',
+        confirmPassword: ''
+      }
     };
   },
   components: {
@@ -313,7 +334,56 @@ export default {
         console.log("获取数据失败", err);
       }
       this.walletDrawVisible = true;
-    }
+    },
+    async handlePassword(index, row) {
+      this.passwordForm.id = row.id;
+      this.dialogPsswordFormVisible = true;
+    },
+    resetPasswordForm() {
+      this.passwordForm.id = null;
+      this.passwordForm.password = '';
+      this.passwordForm.confirmPassword = '';
+      this.dialogPsswordFormVisible = false;
+    },
+    async submitPasswordForm(form) {
+      if(this.passwordForm.password.length < 6 || this.passwordForm.password.length > 16) {
+        this.$message({
+            type: "error",
+            message: "密码长度[6,16]"
+          });
+        return
+      }
+      if(this.passwordForm.password !== this.passwordForm.confirmPassword) {
+        this.$message({
+            type: "error",
+            message: "两次密码不一致"
+          });
+        return
+      }
+      const result = await resetPassword(this.passwordForm);
+        console.log(result)
+          if (result.status == 1) {
+            this.$message({
+              type: "success",
+              message: "重置成功"
+            });
+            this.dialogPsswordFormVisible = false;
+            this.passwordForm = {
+              password: "",
+              confirmPassword: "",
+              id: null
+            };
+          } else {
+            this.$message({
+              type: "error",
+              message: result.message
+            });
+          }
+        
+
+        
+      
+    },
   }
 };
 </script>

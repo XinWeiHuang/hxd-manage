@@ -3,7 +3,7 @@
 	  	<transition name="form-fade" mode="in-out">
 	  		<section class="form_contianer" v-show="showLogin">
 		  		<div class="manage_tip">
-		  			<p>好兄弟贷款管理系统</p>
+		  			<p>{{this.title}}</p>
 		  		</div>
 		    	<el-form :model="loginForm" :rules="rules" ref="loginForm">
 					<el-form-item prop="username">
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-	import {login, getAdminInfo} from '@/api/getData'
+	import {login, getAdminInfo, getWebInfo} from '@/api/getData'
 	import {mapActions, mapState} from 'vuex'
 
 	export default {
@@ -41,12 +41,14 @@
 					],
 				},
 				showLogin: false,
+				title: ''
 			}
 		},
 		mounted(){
 			this.showLogin = true;
+			this.getWebTitle()
 			if (!this.adminInfo.id) {
-    			this.getAdminData()
+				this.getAdminData()
     		}
 		},
 		computed: {
@@ -82,6 +84,15 @@
 					}
 				});
 			},
+			async getWebTitle() {
+				const res = await getWebInfo()
+				if (res.status == 1) {
+					this.title = res.data.webName
+				}else{
+					this.title = '后台管理'
+				}
+			},
+
 		},
 		watch: {
 			adminInfo: function (newValue){
