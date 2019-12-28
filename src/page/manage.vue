@@ -17,7 +17,7 @@
                     <el-submenu index="4">
                         <template slot="title"><i class="el-icon-document"></i>文章管理</template>
                         <el-menu-item index="articleItem">推文类目</el-menu-item>
-                        <el-menu-item index="article">推文管理</el-menu-item>/shopping
+                        <el-menu-item index="article">推文管理</el-menu-item>
                     </el-submenu>
                     <el-submenu index="5">
                         <template slot="title"><i class="el-icon-document"></i>系统管理</template>
