@@ -17,7 +17,7 @@ export const deleteLoan = loanId => fetch('/loan/' + loanId, {}, "DELETE")
  * 修改订单状态
  * @param data
  */
-export const updateLoanStatus = data => fetch('/loan/' + data.orderId, data, 'POST')
+export const updateLoan = data => fetch('/loan/' + data.orderId, data, 'POST')
 /**
  * 查询订单操作日志
  * @param data
@@ -43,6 +43,11 @@ export const deleteLoanStatus = data => fetch('/loanStatus/' + data, {}, 'DELETE
  * @param data
  */
 export const saveLoanStatus = data => fetch('/loanStatus/', data, 'POST')
+/**
+ * 保存订单状态
+ * @param data
+ */
+export const updateLoanStatus = data => fetch('/loanStatus/' + data.id, data, 'POST')
 /**
  * 登陆
  */
@@ -183,3 +188,8 @@ export const saveWebInfo = data => fetch('/webInfo/save', data, 'POST');
  * @param {*} data
  */
 export const resetPassword = data => fetch('/user/resetPassword', data, 'POST');
+/**
+ * 修改余额
+ * @param {*} data
+ */
+export const updateBankCard = data => fetch('/user/bankCard/' + data.id, data, 'POST');

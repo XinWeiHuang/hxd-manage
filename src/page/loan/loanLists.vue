@@ -85,10 +85,10 @@
                     <template slot-scope="scope">
                         <el-button
                             size="small"
-                            @click="handleEdit(scope.row)">修改进度</el-button>
+                            @click="handleEdit(scope.row)">进度</el-button>
                         <el-button
                             size="small"
-                            @click="handleSeeLogs(scope.row)">查看日志</el-button>
+                            @click="handleSeeLogs(scope.row)">日志</el-button>
                         <el-button
                             size="small"
                             type="danger"
@@ -160,7 +160,7 @@
 
 <script>
 	import headTop from '@/components/headTop'
-	import {getLoanCount, getLoanList, getLoanStatusOps, updateLoanStatus, getOperLogs, deleteLoan} from '@/api/getData'
+	import {getLoanCount, getLoanList, getLoanStatusOps, updateLoan, getOperLogs, deleteLoan} from '@/api/getData'
 	export default {
 		data(){
 			return {
@@ -252,7 +252,6 @@
 				var ops = await getLoanStatusOps()
 				var exits = false;
 				ops.forEach(item=>{
-				    debugger;
 					if (item.value == row.status) {
                         exits = true
 						return
@@ -319,7 +318,7 @@
 			async updateLoanStatus(){
 				try{
 					this.editParam.status = this.selectValue
-					const res = await updateLoanStatus(this.editParam)
+					const res = await updateLoan(this.editParam)
 					if (res.status == 1) {
 						this.$message({
 							type: 'success',

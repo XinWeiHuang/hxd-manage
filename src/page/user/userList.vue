@@ -2,7 +2,7 @@
   <div class="fillcontain">
     <head-top></head-top>
     <div class="table_container">
-      <el-table :data="data" style="width: 100%">
+      <el-table :data="data" style="width: 100%" :row-class-name="tableRowClassName">>
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
@@ -59,10 +59,11 @@
         <el-table-column label="身份证" prop="idcard" width="200"></el-table-column>
         <el-table-column label="银行卡" prop="bankCardNum" width="200"></el-table-column>
         <el-table-column label="余额" prop="money"></el-table-column>
-        <el-table-column label="操作" width="340">
+        <el-table-column label="操作" min-width="340">
           <template slot-scope="scope">
             <el-button size="small" @click="handlePassword(scope.$index, scope.row)">重置密码</el-button>
             <el-button size="small" @click="handleWallet(scope.$index, scope.row)">修改钱包</el-button>
+            <el-button size="small" @click="editBankCard(scope.$index, scope.row)">修改银行卡</el-button>
             <el-button size="small" @click="handleWalletDraw(scope.$index, scope.row)">提现记录</el-button>
             <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
@@ -77,7 +78,7 @@
         ></el-pagination>
       </div>
     </div>
-    <el-dialog title="钱包信息" :visible.sync="dialogFormVisible">
+    <el-dialog title="修改余额" :visible.sync="dialogFormVisible">
       <el-form :model="form" ref="form" label-width="140px">
         <el-form-item label="当前余额" prop="money">
           <el-input v-model="form.newMoney"></el-input>
@@ -91,6 +92,17 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+      <el-dialog title="修改银行卡" :visible.sync="bankCardDialogFormVisible">
+          <el-form :model="bankCardForm" ref="bankCardForm" label-width="140px">
+              <el-form-item label="银行卡号" prop="">
+                  <el-input v-model="bankCardForm.bankCard"></el-input>
+              </el-form-item>
+              <el-form-item>
+                  <el-button style="float:right;" type="primary" @click="submitForm('bankCardForm')">修改</el-button>
+                  <el-button style="float:right;margin-right:15px" @click="resetForm">取消</el-button>
+              </el-form-item>
+          </el-form>
+      </el-dialog>
     <el-dialog title="提现记录" :visible.sync="walletDrawVisible">
       <el-table :data="drawData" style="width: 100%">
         <el-table-column label="提现金额" prop="drawMoney"></el-table-column>
@@ -114,6 +126,11 @@
   </div>
 </template>
 
+<style>
+    .el-table .red-row {
+        background: #22ff80;
+    }
+</style>
 <script>
 import headTop from "../../components/headTop";
 import {
@@ -122,6 +139,7 @@ import {
   deleteAdmin,
   getUserWallet,
   saveWallet,
+	updateBankCard,
   getUserWalletDraw,
   resetPassword
 } from "@/api/getData";
@@ -132,16 +150,23 @@ export default {
       currentRow: null,
       page: 1,
       size: 10,
+
       count: 0,
       currentPage: 1,
       param: {
         role: 1
       },
-      dialogFormVisible: false,
-      form: {
-        money: 0,
-        newMoney: 0
-      },
+        dialogFormVisible: false,
+		form: {
+			money: 0,
+			newMoney: 0
+		},
+        bankCardDialogFormVisible: false,
+		bankCardForm : {
+      	    id:"",
+      	    bankCard: ""
+        },
+        oper: "",
       walletDrawVisible: false,
       drawData: [],
       dialogPsswordFormVisible: false,
@@ -158,6 +183,12 @@ export default {
     this.initData();
   },
   methods: {
+	  tableRowClassName({updateBank}) {
+		  if (updateBank === 1) {
+			  return 'red-row';
+		  }
+		  return '';
+	  },
     //初始化数据
     async initData() {
       try {
@@ -189,7 +220,8 @@ export default {
               idcard: item.idcard,
               bankCardNum: item.bankCardNum,
               money: item.money,
-			  education: item.education
+			  education: item.education,
+                updateBank: item.updateBank
             };
             const money = item.money ? item.money : 0;
             tableItem.money = money;
@@ -261,6 +293,7 @@ export default {
     },
     async handleWallet(index, row) {
       try {
+      	this.oper="wallet";
         const param = { userId: row.id };
         const wallet = await getUserWallet(param);
         if (wallet.status == 1) {
@@ -276,24 +309,36 @@ export default {
         console.log("获取数据失败", err);
       }
     },
+	  editBankCard(index, row) {
+		  this.oper="bankCard";
+    	  this.bankCardDialogFormVisible = true;
+          this.bankCardForm.bankCard = row.bankCardNum;
+          this.bankCardForm.id = row.id;
+	  },
     resetForm() {
       this.form.id = null;
       this.form.money = 0;
       this.form.newMoney = 0;
       this.form.userId = null;
       this.dialogFormVisible = false;
+      this.bankCardDialogFormVisible = false;
     },
     submitForm(form) {
       this.$refs[form].validate(async valid => {
         if (valid) {
-          let result = await saveWallet(this.form);
+        	var result ;
+        	if (this.oper == "wallet") {
+				result = await saveWallet(this[form]);
+            } else if (this.oper == "bankCard"){
+				result = await updateBankCard(this[form]);
+            }
           if (result.status == 1) {
             this.$message({
               type: "success",
               message: "修改成功"
             });
             this.initData();
-            this.dialogFormVisible = false;
+            this.resetForm();
             this.adminForm = {
               password: "",
               phone: ""
@@ -379,10 +424,10 @@ export default {
               message: result.message
             });
           }
-        
 
-        
-      
+
+
+
     },
   }
 };
