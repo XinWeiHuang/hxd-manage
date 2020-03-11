@@ -4,23 +4,24 @@ import {dateFormat} from "./mUtils";
 export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 	type = type.toUpperCase();
 	url = baseUrl + url;
+    url = url + '?appid=manage';
 
 	if (type == 'GET') {
 		let dataStr = ''; //数据拼接字符串
 		Object.keys(data).forEach(key => {
 			dataStr += key + '=' + data[key] + '&';
 		})
-        /*TODO 解决get缓存问题*/
+        /*解决get缓存问题*/
         dataStr += 'ldkfj=' + dateFormat("YYYY-mm-dd HH:MM:SS",new Date()) + '&';
 		if (dataStr !== '') {
 			dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
-			url = url + '?' + dataStr;
+			url = url + '&' + dataStr;
 		}
 	}
 
 	if (window.fetch && method == 'fetch') {
 		let requestConfig = {
-			credentials: 'include',
+            credentials: 'include',
 			method: type,
 			headers: {
 				'Accept': 'application/json',
@@ -30,7 +31,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 			cache: "force-cache"
 		}
 
-		if (type == 'POST') {
+		if (type == 'POST' || type=='DELETE') {
 			Object.defineProperty(requestConfig, 'body', {
 				value: JSON.stringify(data)
 			})
@@ -59,6 +60,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 
 			requestObj.open(type, url, true);
 			requestObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            requestObj.withCredentials = true;
 			requestObj.send(sendData);
 
 			requestObj.onreadystatechange = () => {

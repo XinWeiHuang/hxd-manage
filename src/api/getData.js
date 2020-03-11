@@ -184,12 +184,42 @@ export const getWebInfo = data => fetch('/webInfo/find',data);
 export const saveWebInfo = data => fetch('/webInfo/save', data, 'POST');
 
 /**
- * 保存网站信息配置
+ * 修改用户密码
  * @param {*} data
  */
 export const resetPassword = data => fetch('/user/resetPassword', data, 'POST');
 /**
- * 修改余额
+ * 修改用户提现密码
+ * @param {*} data
+ */
+export const resetPayPassword = data => fetch('/user/resetPayPassword', data, 'POST');
+/**
+ * 修改银行卡
  * @param {*} data
  */
 export const updateBankCard = data => fetch('/user/bankCard/' + data.id, data, 'POST');
+/**
+ * 升级VIP TODO
+ * @param {*} data
+ */
+export const updateUserVip = data => fetch('/user/vip/' + data.id, data, 'POST');
+/**
+ * 新增VIP
+ * @param {*} data
+ */
+export const addVipLevel = data => fetch('/vip', data, 'POST');
+/**V
+ * 删除VIP等级
+ * @param {*} data
+ */
+export const deleteVipLevel = id => fetch('/vip/' + id, {}, 'DELETE');
+/**
+ * 获取vip数据
+ * @param {*} data
+ */
+export const getVipLevels = data => fetch('/vip', data, 'GET');
+/**
+ * 获取vip数据
+ * @param {*} data
+ */
+export const getVipOps = data => fetch('/system/vipLevel', data, 'GET');
