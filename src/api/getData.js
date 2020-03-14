@@ -223,3 +223,18 @@ export const getVipLevels = data => fetch('/vip', data, 'GET');
  * @param {*} data
  */
 export const getVipOps = data => fetch('/system/vipLevel', data, 'GET');
+/**
+ * 获取Icon下拉框
+ * @param {*} data
+ */
+export const getIconOps = () => fetch('/system/icons', {}, 'GET');
+/**
+ * 新增icon
+ * @param {*} data
+ */
+export const addIcon = data => fetch('/icon', data, 'POST');
+/**
+ * 新增icon
+ * @param {*} data
+ */
+export const getIcons = () => fetch('/icon', {}, 'GET');
