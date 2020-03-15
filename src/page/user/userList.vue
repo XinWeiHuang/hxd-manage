@@ -1,8 +1,8 @@
 <template>
   <div class="fillcontain">
     <head-top></head-top>
-      <el-button type="primary" stlye="margin-left: 20px" @click="showForm('','addVip','addVipFormVisible')">新增VIP等级</el-button>
-      <el-button type="primary" stlye="margin-left: 20px" @click="showForm('','viewVip','viewVipsVisible', getVipLevels(0))">查看VIP等级</el-button>
+      <!--<el-button type="primary" stlye="margin-left: 20px" @click="showForm('','addVip','addVipFormVisible')">新增VIP等级</el-button>
+      <el-button type="primary" stlye="margin-left: 20px" @click="showForm('','viewVip','viewVipsVisible', getVipLevels(0))">查看VIP等级</el-button>-->
     <div class="table_container">
       <el-table :data="data" style="width: 100%">
         <el-table-column type="expand">
@@ -59,7 +59,11 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="用户名" prop="name"></el-table-column>
+        <el-table-column label="用户名" prop="name">
+            <template slot-scope="scope">
+                <div v-html='getUserName(scope.row)'></div>
+            </template>
+        </el-table-column>
         <el-table-column label="手机号" prop="phone" width="150"></el-table-column>
         <el-table-column label="身份证" prop="idcard" width="200"></el-table-column>
           <el-table-column label="银行卡" prop="getBankCard" width="200">
@@ -269,6 +273,11 @@ export default {
 		},
 		viewVipsVisible: false,
 		vipLevels: [],
+		vipIcons: [
+			{img: ''},
+			{img: require('../../../static/img/commonvip.png')},
+			{img: require('../../../static/img/supervippng.png')}
+		],
     };
   },
   components: {
@@ -286,6 +295,11 @@ export default {
 		  }
 		  return bankCardNum;
 	  },
+	  getUserName (data) {
+          var name= data["name"];
+          var vipLevel = data["vipLevel"];
+          return name + "（<span style='color: red'>" + vipLevel + "</span>)";
+      },
     //初始化数据
     async initData() {
       try {
