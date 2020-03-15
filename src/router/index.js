@@ -14,6 +14,7 @@ const systemConfig = r => require.ensure([], () => r(require('@/page/systemConfi
 const articleItems = r => require.ensure([], () => r(require('@/page/articleItem/articleItem')), 'systemConfig');
 const articles = r => require.ensure([], () => r(require('@/page/article/article')), 'systemConfig');
 const webInfo = r => require.ensure([], () => r(require('@/page/webInfo/webInfo')), 'webInfo');
+const messageServer = r => require.ensure([], () => r(require('@/page/message/messageServer')), 'messageServer');
 
 const routes = [
 	{ path: '/', component: login },
@@ -31,6 +32,7 @@ const routes = [
             { path: '/articleItem', component: articleItems, meta: ['数据管理', '推文类目'] },
 			{ path: '/article', component: articles, meta: ['数据管理', '推文管理'] },
 			{ path: '/webInfo', component: webInfo, meta: ['数据管理', '网站信息配置'] },
+            { path: '/messageServer', component: messageServer, meta: ['数据管理', '短信服务商'] },
         ]
 	}
 ]

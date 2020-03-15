@@ -46,6 +46,7 @@
 		},
 		mounted(){
 			this.showLogin = true;
+			debugger
 			this.getWebTitle()
 			if (!this.adminInfo.id) {
 				this.getAdminData()

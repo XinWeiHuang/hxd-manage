@@ -273,11 +273,6 @@ export default {
 		},
 		viewVipsVisible: false,
 		vipLevels: [],
-		vipIcons: [
-			{img: ''},
-			{img: require('../../../static/img/commonvip.png')},
-			{img: require('../../../static/img/supervippng.png')}
-		],
     };
   },
   components: {

@@ -4,11 +4,14 @@
     <el-row style="margin-top: 20px;">
       <el-col :span="22" :offset="1">
         <el-form :model="form" :rules="rules" ref="form" label-width="140px" class="demo-formData">
+            <el-form-item label="公司名称（短信专用）" prop="companyName">
+                <el-input v-model="form.companyName" ></el-input>
+            </el-form-item>
+          <el-form-item label="站点标题" prop="webName">
+              <el-input v-model="form.webName" ></el-input>
+          </el-form-item>
           <el-form-item label="客服地址" prop="serviceAddress">
             <el-input v-model="form.serviceAddress" ></el-input>
-          </el-form-item>
-          <el-form-item label="站点标题" prop="webName">
-            <el-input v-model="form.webName" ></el-input>
           </el-form-item>
           <el-form-item label="是否关闭网站" prop="isClose">
             <el-radio v-model="form.isClose" :label= 0>开启</el-radio>
@@ -36,7 +39,8 @@ export default {
         serviceAddress: null,
         webName: "",
         isClose: 0,
-        closeTips: ""
+        closeTips: "",
+		  companyName:''
       },
       rules: {
         wenName: [
@@ -65,6 +69,7 @@ export default {
           this.form.webName = webInfo.data.webName;
           this.form.isClose = webInfo.data.isClose;
           this.form.closeTips = webInfo.data.closeTips;
+          this.form.companyName = webInfo.data.companyName;
           console.log(this.form)
         } else {
           throw new Error("获取数据失败");

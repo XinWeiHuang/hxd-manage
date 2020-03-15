@@ -234,7 +234,23 @@ export const getIconOps = () => fetch('/system/icons', {}, 'GET');
  */
 export const addIcon = data => fetch('/icon', data, 'POST');
 /**
- * 新增icon
+ * 获取图标
  * @param {*} data
  */
 export const getIcons = () => fetch('/icon', {}, 'GET');
+
+/**
+ * 查询短信服务商
+ * @param {*} data
+ */
+export const getMessageServers = () => fetch('/messageServer', {}, 'GET');
+/**
+ * 获取工作域下拉框
+ * @param {*} data
+ */
+export const getWorkTypeOps = () => fetch('/system/workType', {}, 'GET');
+/**
+ * 修改等新服务商
+ * @param {*} data
+ */
+export const updateMessageServer = data => fetch('/messageServer/' + data.id, data, 'POST');

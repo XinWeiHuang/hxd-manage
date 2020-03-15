@@ -26,7 +26,7 @@ const actions = {
 			const res = await getAdminInfo()
 			if (res.status == 1) {
 				commit('saveAdminInfo', res.data);
-			}else{
+			} else{
 				throw new Error(res.type)
 			}
 		}catch(err){

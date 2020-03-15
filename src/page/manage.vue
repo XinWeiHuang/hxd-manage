@@ -23,6 +23,7 @@
                         <template slot="title"><i class="el-icon-document"></i>系统管理</template>
                         <el-menu-item index="systemConfig">贷款配置</el-menu-item>
                         <el-menu-item index="webInfo">网站信息配置</el-menu-item>
+                        <el-menu-item index="messageServer">短信服务商</el-menu-item>
                     </el-submenu>
 				</el-menu>
 			</el-col>
